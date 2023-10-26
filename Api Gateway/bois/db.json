@@ -1,0 +1,28 @@
+{
+    "bois":[
+        {
+            "boi_id": 1,
+            "boi_name":"Mimosa",
+            "boi_raca": "Holandesa",
+            "boi_idade": 5
+        },
+        {
+            "boi_id": 2,
+            "boi_name":"Bandido",
+            "boi_raca": "Nelore",
+            "boi_idade": 3
+        },
+        {
+            "boi_id": 3,
+            "boi_name":"Lindinha",
+            "boi_raca": "Charolês",
+            "boi_idade": 7
+        },
+        {
+            "boi_id": 4,
+            "boi_name":"Pimpolho",
+            "boi_raca": "Zebú",
+            "boi_idade": 2
+        }
+    ]
+}
