@@ -1,5 +1,29 @@
 version: "3"
 services:
+  postgres-conta-r:
+    image: postgres
+    container_name: postgres-conta-r
+    environment:
+      POSTGRES_PASSWORD: postgress
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-conta-r:/var/lib/postgresql/data
+    networks:
+      - bantads
+
+  postgres-conta-cud:
+    image: postgres
+    container_name: postgres-conta-cud
+    environment:
+      POSTGRES_PASSWORD: postgress
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres-conta-cud:/var/lib/postgresql/data
+    networks:
+      - bantads
+  
   mongodb:
     networks:
       - bantads
