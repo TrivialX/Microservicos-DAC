@@ -1,0 +1,35 @@
+version: "3"
+services:
+  mongodb:
+    networks:
+      - bantads
+    container_name: mongodb
+    image: mongo
+    ports:
+      - "27017:27017"
+      
+  rabbitmq:
+    container_name: rabbitmq
+    networks:
+      - bantads
+    image: rabbitmq:3.12-management
+    volumes:  
+      - ./rabbitmq:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+      
+  micro-auth:
+    container_name: micro-auth
+    networks:
+      - bantads
+    image: micro-auth
+    depends_on:
+      - mongodb
+      - rabbitmq
+    ports:
+      - "5004:8080"
+
+networks:
+  bantads:
+    driver: bridge
