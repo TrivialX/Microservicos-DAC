@@ -1,14 +1,18 @@
 package com.example.demo.services;
 
-import com.example.demo.configuration.RabbitConfiguration;
+
+import com.example.demo.DTOS.AutocadastroDTO;
+import com.example.demo.DTOS.Message;
 import com.example.demo.models.Auth;
 import com.example.demo.repository.AuthRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.modelmapper.ModelMapper;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +27,14 @@ public class RabbitService {
     private final ObjectMapper objectMapper;
 
     @Autowired
+    private ModelMapper mapper;
+
+    @Autowired
     AuthRepository authRepo;
+
+
+    @Autowired
+    Queue queue1;
 
     @Autowired
     EmailService emailService;
@@ -33,8 +44,8 @@ public class RabbitService {
         this.objectMapper = new ObjectMapper();
     }
 
-    public void sendMessage(Queue queue, String message) {
-        rabbitTemplate.convertAndSend(queue.getName(), message );
+    public void sendMessage(String queue, Message message) {
+        rabbitTemplate.convertAndSend(queue, message);
     }
 
 
@@ -105,7 +116,7 @@ public class RabbitService {
 //    }
 
     @RabbitListener(queues = "teste")
-    public void receiveMessageSaga(String message) throws NoSuchAlgorithmException {
+    public void receiveMessageTeste(String message) throws NoSuchAlgorithmException {
 
         String aux = Encrypt.gerarSenhaAleatoria();
 
@@ -115,8 +126,78 @@ public class RabbitService {
 
         System.out.println("rato gerado: " + senha);
 
-
     }
+
+   private void SendEmailWelcome(String email, String nome, String senha, String typeUser){
+        String emailTitle;
+        String emailMessage;
+
+        if(typeUser.equals("CLIENTE")){
+            emailTitle = "Bem-Vindo ao BanTads";
+            emailMessage = "Olá " + nome + " Sua conta foi aprovada no BanTads.\n\n" +
+                    "Segue sua senha para entrar na plataforma: " + senha;
+
+        }else{
+            emailTitle = "Acesso liberado";
+            emailMessage = "Olá, " + nome + ", segue senha para acesso a plataforma do Bantads\n\n" +
+                    "Senha:" + senha;
+        }
+
+        emailService.enviarEmail(email, emailTitle, emailMessage);
+   }
+
+
+    @RabbitListener(queues = "saga-auth-autocadastro-init")
+    public void receiveMessageSaga(@Payload Message message){
+        try{
+            AutocadastroDTO base = mapper.map(message.getData(), AutocadastroDTO.class);
+            Auth auth = mapper.map(base, Auth.class);
+
+            auth.setTipoUser("CLIENTE");
+
+            String aux = Encrypt.gerarSenhaAleatoria();
+            String salt = Encrypt.gerarSalt();
+            String senha = Encrypt.gerarSenhaSegura(aux, salt);
+
+            auth.setSalt(salt);
+            auth.setSenha(senha);
+            auth.setIdUser(base.getId_cliente());
+
+            try {
+                this.authRepo.save(auth);
+                System.out.println("Auth salvo");
+
+            }catch (Exception ex){
+                System.out.println("Auth deu ruim");
+                Message msg = new Message();
+                msg.setData(null);
+                msg.setMensagem(ex.getMessage());
+                msg.setErro(true);
+                this.sendMessage("saga-auth-autocadastro-end", msg);
+                return;
+            }
+
+
+            this.SendEmailWelcome(auth.getEmail(), auth.getNome(), auth.getSenha(), auth.getTipoUser());
+            base.setSenha(auth.getSenha());
+
+            Message msg = new Message();
+            msg.setData(null);
+            msg.setMensagem("OK");
+
+            this.sendMessage("saga-auth-autocadastro-end", msg);
+
+        }catch (Exception ex){
+            System.out.println("Auth deu ruim");
+            Message msg = new Message();
+            msg.setData(null);
+            msg.setMensagem(ex.getMessage());
+            msg.setErro(true);
+            this.sendMessage("saga-auth-autocadastro-end", msg );
+        }
+    }
+
+
 
 
 

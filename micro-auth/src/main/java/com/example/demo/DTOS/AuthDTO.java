@@ -3,8 +3,8 @@ package com.example.demo.DTOS;
 public class AuthDTO {
 
     private String email;
-
     private String senha;
+    private String nome;
 
     public AuthDTO(String email, String senha) {
         this.email = email;
