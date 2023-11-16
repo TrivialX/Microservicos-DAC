@@ -1,20 +1,17 @@
 package com.bantads.saga.DTO;
 
 public class ClienteAutoCadastroDTO {
-    private long id; 
-    private String nome; 
+    private long id;
+    private String nome;
     private String email;
-    private String cpf; 
+    private String cpf;
     private EnderecoDTO endereco;
-    private String telefone; 
+    private String telefone;
     private double salario;
+    private double limite;
 
-   
-    public ClienteAutoCadastroDTO() {
-    }
-
-    
-    public ClienteAutoCadastroDTO(long id, String nome, String email, String cpf, EnderecoDTO endereco, String telefone, double salario) {
+    public ClienteAutoCadastroDTO(long id, String nome, String email, String cpf, EnderecoDTO endereco, String telefone,
+            double salario, double limite) {
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -22,9 +19,19 @@ public class ClienteAutoCadastroDTO {
         this.endereco = endereco;
         this.telefone = telefone;
         this.salario = salario;
+        this.limite = limite;
     }
 
+    public double getLimite() {
+        return limite;
+    }
 
+    public void setLimite(double limite) {
+        this.limite = limite;
+    }
+
+    public ClienteAutoCadastroDTO() {
+    }
 
     public long getId() {
         return id;
@@ -82,6 +89,4 @@ public class ClienteAutoCadastroDTO {
         this.salario = salario;
     }
 
-   
 }
-

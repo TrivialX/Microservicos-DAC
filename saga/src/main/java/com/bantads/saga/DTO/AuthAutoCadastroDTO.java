@@ -1,17 +1,17 @@
 package com.bantads.saga.DTO;
 
 public class AuthAutoCadastroDTO {
+    private long id;
     private String email;
-    private String nome;
-    private String senha;
+    private String tipo;
 
     public AuthAutoCadastroDTO() {
     }
 
-    public AuthAutoCadastroDTO(String email, String nome, String senha) {
+    public AuthAutoCadastroDTO(long id, String email, String tipo) {
+        this.id = id;
         this.email = email;
-        this.nome = nome;
-        this.senha = senha;
+        this.tipo = tipo;
     }
 
     public String getEmail() {
@@ -22,20 +22,21 @@ public class AuthAutoCadastroDTO {
         this.email = email;
     }
 
-    public String getNome() {
-        return nome;
+    public long getId() {
+        return id;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getSenha() {
-        return senha;
-    }
+	public String getTipo() {
+		return tipo;
+	}
 
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
 
+    
 }

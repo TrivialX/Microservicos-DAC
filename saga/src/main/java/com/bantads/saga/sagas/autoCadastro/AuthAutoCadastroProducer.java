@@ -12,7 +12,7 @@ public class AuthAutoCadastroProducer {
     @Autowired
     private AmqpTemplate template;
     
-    //Seq 3
+    //Seq 5
     public void setAuthMessage(MensagemDTO dto) {
         template.convertAndSend(ConfigAutoCadastro.queueAutoCadAuth().getName(), dto);
     }

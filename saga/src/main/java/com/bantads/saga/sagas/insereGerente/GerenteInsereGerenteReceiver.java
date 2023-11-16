@@ -1,4 +1,4 @@
-package com.bantads.saga.sagas.autoCadastro;
+package com.bantads.saga.sagas.insereGerente;
 
 import java.security.NoSuchAlgorithmException;
 
@@ -8,30 +8,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
-import com.bantads.saga.DTO.AuthAutoCadastroDTO;
+import com.bantads.saga.DTO.InsereGerenteDTO;
 import com.bantads.saga.DTO.MensagemDTO;
-import com.bantads.saga.service.AutoCadastroService;
+import com.bantads.saga.service.InsereGerenteService;
 
 @Component
-public class ContaAutoCadastroListener {
+public class GerenteInsereGerenteReceiver {
     @Autowired
     private ModelMapper mapper;
-
+    
     @Autowired
-    private AutoCadastroService aService;
+    private InsereGerenteService aService;
 
-
-    //seq 4
-    @RabbitListener(queues = "saga-conta-autocadastro-end")
+    // seq 2
+    @RabbitListener(queues = "saga-gerente-inseregerente-end")
     public void receiveMessageSaga(@Payload MensagemDTO message) throws NoSuchAlgorithmException {
         try {
-            AuthAutoCadastroDTO authACDTO = mapper.map(message.getData(), AuthAutoCadastroDTO.class);
-            authACDTO.setTipo("Cliente");
-            aService.setAuthAutoCadastro(authACDTO);
+            InsereGerenteDTO gerenteDTO = mapper.map(message.getData(), InsereGerenteDTO.class);
+            aService.setContaIGMessage(gerenteDTO);
         } catch (Exception e) {
             System.out.println("erro " + e);
         }
 
     }
-
 }
+
+

@@ -6,6 +6,17 @@ public class MensagemDTO {
     private Object data;
     private boolean erro;
 
+    
+    public MensagemDTO() {
+        this.erro = false;
+    }
+
+    public MensagemDTO(String mensagem, Object data, boolean erro) {
+        this.mensagem = mensagem;
+        this.data = data;
+        this.erro = erro;
+    }
+
     public boolean isErro() {
         return erro;
     }
