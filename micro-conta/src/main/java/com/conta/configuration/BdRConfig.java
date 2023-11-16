@@ -28,7 +28,6 @@ public class BdRConfig {
     @Autowired
     private Environment env;
 
-    @Primary
     @Bean
     public LocalContainerEntityManagerFactoryBean rEntityManager() {
         final LocalContainerEntityManagerFactoryBean em =
@@ -41,6 +40,7 @@ public class BdRConfig {
         em.setJpaVendorAdapter(vendorAdapter);
         final HashMap<String, Object> properties = new HashMap<String, Object>();
 
+        properties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         properties.put("spring.jpa.show-sql", "true");
 
         em.setJpaPropertyMap(properties);
@@ -49,21 +49,19 @@ public class BdRConfig {
     }
 
     @Bean
-    @Primary
     public DataSource rDataSource() {
         DriverManagerDataSource dataSource
                 = new DriverManagerDataSource();
 
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/conta");
+        dataSource.setUrl("jdbc:postgresql://postgres-conta-r:5432/postgres");
         dataSource.setSchema("public");
         dataSource.setUsername("postgres");
-        dataSource.setPassword("postgres");
+        dataSource.setPassword("postgress");
 
         return dataSource;
     }
 
-    @Primary
     @Bean
     public PlatformTransactionManager rTransactionManager() {
         final JpaTransactionManager transactionManager = new JpaTransactionManager();

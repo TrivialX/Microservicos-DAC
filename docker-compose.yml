@@ -1,14 +1,13 @@
 version: "3"
+
 services:
   postgres-conta-r:
     image: postgres
     container_name: postgres-conta-r
     environment:
-      POSTGRES_PASSWORD: postgress
+      POSTGRES_PASSWORD: "postgress"
     ports:
       - "5432:5432"
-    volumes:
-      - postgres-conta-r:/var/lib/postgresql/data
     networks:
       - bantads
 
@@ -16,43 +15,36 @@ services:
     image: postgres
     container_name: postgres-conta-cud
     environment:
-      POSTGRES_PASSWORD: postgress
+      POSTGRES_PASSWORD: "postgress"
     ports:
       - "5433:5432"
-    volumes:
-      - postgres-conta-cud:/var/lib/postgresql/data
     networks:
       - bantads
-  
-  mongodb:
-    networks:
-      - bantads
-    container_name: mongodb
-    image: mongo
-    ports:
-      - "27017:27017"
       
   rabbitmq:
     container_name: rabbitmq
     networks:
       - bantads
     image: rabbitmq:3.12-management
-    volumes:  
-      - ./rabbitmq:/var/lib/rabbitmq
     ports:
       - "5672:5672"
       - "15672:15672"
-      
-  micro-auth:
-    container_name: micro-auth
+  
+  micro-conta:
+    container_name: micro-conta
+    image: conta:0.0.1-SNAPSHOT
     networks:
       - bantads
-    image: micro-auth
-    depends_on:
-      - mongodb
-      - rabbitmq
     ports:
-      - "5004:8080"
+      - "5005:8080"
+  
+  micro-auth:
+    container_name: micro-auth
+    image: auth:0.0.1-SNAPSHOT
+    networks:
+      - bantads
+    ports:
+      - "5005:8080"
 
 networks:
   bantads:

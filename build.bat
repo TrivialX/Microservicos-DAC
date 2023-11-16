@@ -1,10 +1,13 @@
 REM Iniciando as imagens
 echo @off
 echo MICRO-AUTH
-cd demo 
 
-call ./mvnw spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=micro-auth
+cd micro-auth
+call ./mvnw spring-boot:build-image -DskipTests
+cd..
 
+cd micro-conta
+call ./mvnw spring-boot:build-image -DskipTests
 cd ..
 
 echo build and up containeers
