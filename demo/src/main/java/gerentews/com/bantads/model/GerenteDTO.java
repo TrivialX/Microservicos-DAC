@@ -1,25 +1,20 @@
-package clientews.com.bantads.model;
-
+package gerentews.com.bantads.model;
 import java.io.Serializable;
 
-public class ClienteDTO implements Serializable {
+public class GerenteDTO implements Serializable {
     private Long id;
     private String nome;
     private String cpf;
     private String email;
-    private Double limite; 
-    private String endereco; 
 
-    public ClienteDTO() {
+    public GerenteDTO() {
     }
 
-    public ClienteDTO(Long id, String nome, String cpf, String email, Double limite, String endereco) {
+    public GerenteDTO(Long id, String nome, String cpf, String email) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
-        this.limite = limite;
-        this.endereco = endereco;
     }
 
     public Long getId() {
@@ -54,19 +49,4 @@ public class ClienteDTO implements Serializable {
         this.email = email;
     }
 
-    public Double getLimite() {
-        return limite;
-    }
-
-    public void setLimite(Double limite) {
-        this.limite = limite;
-    }
-
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
 }

@@ -1,4 +1,4 @@
-package clientews.com.bantads.api;
+package gerentews.com.bantads.api;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import clientews.com.bantads.model.Cliente;
-import clientews.com.bantads.model.ClienteDTO;
-import clientews.com.bantads.service.ClienteService;
+import gerentews.com.bantads.model.Gerente;
+import gerentews.com.bantads.model.GerenteDTO;
+import gerentews.com.bantads.service.GerenteService;
 import jakarta.persistence.EntityNotFoundException;
 
 import org.modelmapper.Conditions;
@@ -27,58 +27,58 @@ import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
-public class ClienteRest {
+public class GerenteRest {
     @Autowired
-    private ClienteService clienteService;
+    private GerenteService gerenteService;
     @Autowired
     private ModelMapper mapper;
 
-    // @GetMapping("/clientes")
-    // public List<ClienteDTO> obterTodosClientes() {
-    // List<Cliente> lista = clienteService.listaClientes();
-    // return lista.stream().map(cliente -> mapper.map(cliente,
-    // ClienteDTO.class)).collect(Collectors.toList());
+    // @GetMapping("/gerentes")
+    // public List<GerenteDTO> obterTodosGerentes() {
+    // List<Gerente> lista = gerenteService.listaGerentes();
+    // return lista.stream().map(gerente -> mapper.map(gerente,
+    // GerenteDTO.class)).collect(Collectors.toList());
 
     // }
-    @GetMapping("/clientes")
-    public ResponseEntity<List<ClienteDTO>> obterTodosClientes() {
+    @GetMapping("/gerentes")
+    public ResponseEntity<List<GerenteDTO>> obterTodosGerentes() {
         try {
-            List<Cliente> lista = clienteService.listaClientes();
-            List<ClienteDTO> clienteDTOs = lista.stream()
-                    .map(cliente -> mapper.map(cliente, ClienteDTO.class))
+            List<Gerente> lista = gerenteService.listaGerentes();
+            List<GerenteDTO> gerenteDTOs = lista.stream()
+                    .map(gerente -> mapper.map(gerente, GerenteDTO.class))
                     .collect(Collectors.toList());
 
-            return ResponseEntity.ok(clienteDTOs);
+            return ResponseEntity.ok(gerenteDTOs);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    @PostMapping("/clientes")
-    public ResponseEntity<ClienteDTO> inserirCliente(@RequestBody ClienteDTO clienteDTO) {
+    @PostMapping("/gerentes")
+    public ResponseEntity<GerenteDTO> inserirGerente(@RequestBody GerenteDTO gerenteDTO) {
         try {
             mapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
-            Cliente cliente = mapper.map(clienteDTO, Cliente.class);
-            Cliente novoCliente = clienteService.salvarCliente(cliente);
-            ClienteDTO novoClienteDTO = mapper.map(novoCliente, ClienteDTO.class);
-            return ResponseEntity.status(HttpStatus.CREATED).body(novoClienteDTO);
+            Gerente gerente = mapper.map(gerenteDTO, Gerente.class);
+            Gerente novoGerente = gerenteService.salvarGerente(gerente);
+            GerenteDTO novoGerenteDTO = mapper.map(novoGerente, GerenteDTO.class);
+            return ResponseEntity.status(HttpStatus.CREATED).body(novoGerenteDTO);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    @PutMapping("/clientes/{id}")
-    public ResponseEntity<?> atualizarCliente(@PathVariable Long id, @RequestBody ClienteDTO clienteDTO) {
+    @PutMapping("/gerentes/{id}")
+    public ResponseEntity<?> atualizarGerente(@PathVariable Long id, @RequestBody GerenteDTO gerenteDTO) {
         try {
-            if (!clienteService.existeCliente(id)) {
+            if (!gerenteService.existeGerente(id)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body("Não foi possível atualizar, o cliente não foi encontrado.");
+                        .body("Não foi possível atualizar, o gerente não foi encontrado.");
             }
-            Cliente cliente = mapper.map(clienteDTO, Cliente.class);
-            cliente.setId(id);
-            Cliente clienteAtualizado = clienteService.salvarCliente(cliente);
-            ClienteDTO clienteAtualizadoDTO = mapper.map(clienteAtualizado, ClienteDTO.class);
-            return ResponseEntity.ok(clienteAtualizadoDTO);
+            Gerente gerente = mapper.map(gerenteDTO, Gerente.class);
+            gerente.setId(id);
+            Gerente gerenteAtualizado = gerenteService.salvarGerente(gerente);
+            GerenteDTO gerenteAtualizadoDTO = mapper.map(gerenteAtualizado, GerenteDTO.class);
+            return ResponseEntity.ok(gerenteAtualizadoDTO);
         } catch (DataIntegrityViolationException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Erro de integridade de dados: " + e.getMessage());
@@ -87,26 +87,26 @@ public class ClienteRest {
         }
     }
 
-    @DeleteMapping("/clientes/{id}")
-    public ResponseEntity<?> deletarCliente(@PathVariable Long id) {
+    @DeleteMapping("/gerentes/{id}")
+    public ResponseEntity<?> deletarGerente(@PathVariable Long id) {
         try {
-            clienteService.deletarCliente(id);
+            gerenteService.deletarGerente(id);
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu um erro no servidor.");
         }
     }
 
-    @GetMapping("/clientes/{id}")
-    public ResponseEntity<ClienteDTO> obterClientePorId(@PathVariable Long id) {
+    @GetMapping("/gerentes/{id}")
+    public ResponseEntity<GerenteDTO> obterGerentePorId(@PathVariable Long id) {
         try {
-            Cliente cliente = clienteService.getById(id);
-            System.out.println(cliente);
-            if (cliente == null) {
-                throw new EntityNotFoundException("Cliente não encontrado para o ID: " + id);
+            Gerente gerente = gerenteService.getById(id);
+            System.out.println(gerente);
+            if (gerente == null) {
+                throw new EntityNotFoundException("Gerente não encontrado para o ID: " + id);
             } else {
-                ClienteDTO clienteDTO = mapper.map(cliente, ClienteDTO.class);
-                return ResponseEntity.ok(clienteDTO);
+                GerenteDTO gerenteDTO = mapper.map(gerente, GerenteDTO.class);
+                return ResponseEntity.ok(gerenteDTO);
             }
         } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -115,7 +115,7 @@ public class ClienteRest {
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<String> handleEntityNotFoundException(EntityNotFoundException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Gerente não encontrado");
     }
 
     @ExceptionHandler(Exception.class)
