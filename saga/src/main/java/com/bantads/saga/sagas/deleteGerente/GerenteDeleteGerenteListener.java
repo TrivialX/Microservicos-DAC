@@ -5,13 +5,14 @@ import java.security.NoSuchAlgorithmException;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.stereotype.Component;
 
 import com.bantads.saga.DTO.IdMensagemDTO;
 
 import com.bantads.saga.service.DeleteGerenteService;
 
 
-
+@Component
 public class GerenteDeleteGerenteListener {
     
     @Autowired

@@ -2,10 +2,12 @@ package com.bantads.saga.sagas.deleteGerente;
 
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.bantads.saga.DTO.IdMensagemDTO;
-import com.bantads.saga.sagas.insereGerente.ConfigInsereGerente;
 
+
+@Component
 public class AuthDeleteGerenteProducer {
     
     @Autowired
@@ -13,7 +15,7 @@ public class AuthDeleteGerenteProducer {
     
     //Seq 5
     public void setAuthDeleteGerenteMessage(IdMensagemDTO dto) {
-        template.convertAndSend(ConfigInsereGerente.queueAuthInsereGerente().getName(), dto);
+        template.convertAndSend(ConfigDeleteGerente.queueAuthDeleteGerente().getName(), dto);
     }
     
 }
