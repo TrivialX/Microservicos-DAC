@@ -1,10 +1,12 @@
 package com.bantads.saga.sagas.insereGerente;
 
 import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@EnableRabbit
 public class ConfigInsereGerente {
 
     @Bean
@@ -36,6 +38,7 @@ public class ConfigInsereGerente {
     public static Queue queueAuthInsereGerenteReceiver() {
         return new Queue("saga-auth-inseregerente-end", true);
     }
+
 
 
 }

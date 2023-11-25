@@ -1,12 +1,13 @@
 package com.bantads.saga.sagas.autoCadastro;
 
 import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
+
 
 @Configuration
-@Component
+@EnableRabbit
 public class ConfigAutoCadastro {
 
     @Bean
@@ -49,4 +50,5 @@ public class ConfigAutoCadastro {
         return new Queue("saga-auth-autocadastro-end", true);
     }
 
+ 
 }

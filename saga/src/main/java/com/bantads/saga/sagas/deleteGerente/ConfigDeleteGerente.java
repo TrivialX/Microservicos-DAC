@@ -1,10 +1,13 @@
 package com.bantads.saga.sagas.deleteGerente;
 
 import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@EnableRabbit
 public class ConfigDeleteGerente {
     
     @Bean
@@ -36,5 +39,9 @@ public class ConfigDeleteGerente {
     public static Queue queueAuthDeleteGerenteReceiver() {
         return new Queue("saga-auth-deletegerente-end", true);
     }
+
+  
+
+    
 }
 

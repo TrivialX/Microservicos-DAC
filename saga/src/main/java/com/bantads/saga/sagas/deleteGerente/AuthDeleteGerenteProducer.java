@@ -1,6 +1,7 @@
 package com.bantads.saga.sagas.deleteGerente;
 
-import org.springframework.amqp.core.AmqpTemplate;
+
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +12,7 @@ import com.bantads.saga.DTO.IdMensagemDTO;
 public class AuthDeleteGerenteProducer {
     
     @Autowired
-    private AmqpTemplate template;
+    private RabbitTemplate template;
     
     //Seq 5
     public void setAuthDeleteGerenteMessage(IdMensagemDTO dto) {

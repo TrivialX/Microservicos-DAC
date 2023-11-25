@@ -1,12 +1,14 @@
 package com.bantads.saga.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.bantads.saga.DTO.IdMensagemDTO;
 import com.bantads.saga.sagas.deleteGerente.AuthDeleteGerenteProducer;
 import com.bantads.saga.sagas.deleteGerente.ContaDeleteGerenteProducer;
 import com.bantads.saga.sagas.deleteGerente.GerenteDeleteGerenteProducer;
 
-
+@Service
 public class DeleteGerenteService {
     
     @Autowired
