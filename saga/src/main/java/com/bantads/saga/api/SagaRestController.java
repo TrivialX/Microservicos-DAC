@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bantads.saga.DTO.ClienteAutoCadastroDTO;
-import com.bantads.saga.DTO.InsereGerenteDTO;
+import com.bantads.saga.DTO.GerenteDTO;
 import com.bantads.saga.service.AutoCadastroService;
 import com.bantads.saga.service.DeleteGerenteService;
 import com.bantads.saga.service.InsereGerenteService;
@@ -34,7 +34,7 @@ public class SagaRestController {
     }
 
     @PostMapping("/gerentes")
-    public ResponseEntity<?> sagaInsereGerente(@RequestBody InsereGerenteDTO dto) {
+    public ResponseEntity<?> sagaInsereGerente(@RequestBody GerenteDTO dto) {
         insereGerService.initSagaInsereGerente(dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -45,7 +45,9 @@ public class SagaRestController {
             deleteGerService.initDeleteGerente(id);
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
+            System.out.println("erro" + e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu um erro no servidor.");
+            
         }
     }
 

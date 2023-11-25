@@ -1,16 +1,16 @@
 package com.bantads.saga.DTO;
 
-public class InsereGerenteDTO {
+public class GerenteDTO {
     private long id;
     private String nome;
     private String email;
     private String cpf;
     private String telefone;
 
-    public InsereGerenteDTO() {
+    public GerenteDTO() {
     }
 
-    public InsereGerenteDTO(long id, String nome, String email, String cpf, String telefone) {
+    public GerenteDTO(long id, String nome, String email, String cpf, String telefone) {
         this.id = id;
         this.nome = nome;
         this.email = email;

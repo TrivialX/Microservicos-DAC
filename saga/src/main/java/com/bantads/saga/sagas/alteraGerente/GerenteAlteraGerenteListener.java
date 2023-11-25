@@ -1,4 +1,4 @@
-package com.bantads.saga.sagas.insereGerente;
+package com.bantads.saga.sagas.alteraGerente;
 
 import java.security.NoSuchAlgorithmException;
 
@@ -8,29 +8,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
+
 import com.bantads.saga.DTO.GerenteDTO;
 import com.bantads.saga.DTO.MensagemDTO;
-import com.bantads.saga.service.InsereGerenteService;
+
 
 @Component
-public class GerenteInsereGerenteReceiver {
-    @Autowired
-    private ModelMapper mapper;
+public class GerenteAlteraGerenteListener {
     
     @Autowired
-    private InsereGerenteService aService;
+    private ModelMapper mapper;
+    AuthAlteraGerenteProducer prod;
 
     // seq 2
-    @RabbitListener(queues = "saga-gerente-inseregerente-end")
+    @RabbitListener(queues = "saga-gerente-alteragerente-end")
     public void receiveMessageSaga(@Payload MensagemDTO message) throws NoSuchAlgorithmException {
         try {
-            GerenteDTO gerenteDTO = mapper.map(message.getData(), GerenteDTO.class);
-            aService.setContaIGMessage(gerenteDTO);
+            GerenteDTO gerente = mapper.map(message.getData(), GerenteDTO.class);
+            MensagemDTO msg = new MensagemDTO();
+            msg.setMensagem("");
+            msg.setData(gerente);
+            prod.setAuthMessage(msg);
         } catch (Exception e) {
             System.out.println("erro " + e);
         }
 
     }
 }
-
-

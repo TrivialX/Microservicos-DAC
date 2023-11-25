@@ -24,6 +24,7 @@ public class GerenteDeleteGerenteListener {
         try {
             Long id = message.getId();
             aService.setContaDGMessage(id);
+            System.out.println("cheguei aq");
         } catch (Exception e) {
             System.out.println("erro " + e);
         }
