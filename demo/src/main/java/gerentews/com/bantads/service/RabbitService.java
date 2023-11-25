@@ -38,7 +38,7 @@ public class RabbitService {
         } catch (Exception e) {
              IdMensagemDTO mensagem = new IdMensagemDTO();
              mensagem.setErro(true);
-             mensagem.setMessage("erro ao deletar gerente: " + e);
+             mensagem.setMessage(" erro ao deletar gerente: " + e);
              rabbitTemplate.convertAndSend("saga-gerente-deletegerente-end", mensagem);
             System.out.println("erro " + e);
         }
@@ -57,7 +57,7 @@ public class RabbitService {
         } catch (Exception e) {
              IdMensagemDTO mensagem = new IdMensagemDTO();
              mensagem.setErro(true);
-             mensagem.setMessage("erro ao inserir gerente: " + e);
+             mensagem.setMessage(" erro ao inserir gerente: " + e);
              rabbitTemplate.convertAndSend("saga-gerente-inseregerente-end", mensagem);
             System.out.println("erro " + e);
         }
@@ -69,7 +69,7 @@ public class RabbitService {
         try {
             Gerente gerente = mapper.map(message.getData(), Gerente.class);
             gerService.salvarGerente(gerente);
-            message.setMensagem("gerente alterado no gerenteMS");
+            message.setMensagem("gerente alterado com sucesso!");
             rabbitTemplate.convertAndSend("saga-gerente-alteragerente-end", message);
 
         } catch (Exception e) {
