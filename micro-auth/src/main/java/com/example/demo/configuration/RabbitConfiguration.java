@@ -1,6 +1,7 @@
 package com.example.demo.configuration;
 
 import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -27,11 +28,19 @@ public class RabbitConfiguration {
         return new Queue("saga-altera-user", true);
     }
 
-    @Bean Queue queue5() {
+    @Bean  Queue queue5() {
         return new Queue("saga-gerente", true);
     }
 
     @Bean Queue teste() {
         return new Queue("teste", true);
+    }
+
+    @Bean Queue queue6() {
+        return new Queue("saga-auth-aprova-init", true);
+    }
+
+    @Bean Queue queue7() {
+        return new Queue("saga-auth-aprova-end", true);
     }
 }
