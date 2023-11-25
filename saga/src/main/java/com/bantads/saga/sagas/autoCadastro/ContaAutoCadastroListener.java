@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
-import com.bantads.saga.DTO.AuthAutoCadastroDTO;
+import com.bantads.saga.DTO.AutoCadastroDTO;
 import com.bantads.saga.DTO.MensagemDTO;
 import com.bantads.saga.service.AutoCadastroService;
 
@@ -25,8 +25,7 @@ public class ContaAutoCadastroListener {
     @RabbitListener(queues = "saga-conta-autocadastro-end")
     public void receiveMessageSaga(@Payload MensagemDTO message) throws NoSuchAlgorithmException {
         try {
-            AuthAutoCadastroDTO authACDTO = mapper.map(message.getData(), AuthAutoCadastroDTO.class);
-            authACDTO.setTipo("Cliente");
+            AutoCadastroDTO authACDTO = mapper.map(message.getData(), AutoCadastroDTO.class);
             aService.setAuthAutoCadastro(authACDTO);
         } catch (Exception e) {
             System.out.println("erro " + e);

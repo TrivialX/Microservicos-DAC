@@ -1,6 +1,6 @@
 package com.bantads.saga.DTO;
 
-public class ClienteAutoCadastroDTO {
+public class ClienteDTO {
     private long id;
     private String nome;
     private String email;
@@ -10,7 +10,7 @@ public class ClienteAutoCadastroDTO {
     private double salario;
     private double limite;
 
-    public ClienteAutoCadastroDTO(long id, String nome, String email, String cpf, EnderecoDTO endereco, String telefone,
+    public ClienteDTO(long id, String nome, String email, String cpf, EnderecoDTO endereco, String telefone,
             double salario, double limite) {
         this.id = id;
         this.nome = nome;
@@ -30,7 +30,7 @@ public class ClienteAutoCadastroDTO {
         this.limite = limite;
     }
 
-    public ClienteAutoCadastroDTO() {
+    public ClienteDTO() {
     }
 
     public long getId() {

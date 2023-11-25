@@ -1,20 +1,20 @@
-package com.bantads.saga.sagas.alteraGerente;
+package com.bantads.saga.sagas.aprovaCliente;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-
 
 import com.bantads.saga.DTO.MensagemDTO;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AuthAlteraGerenteProducer {
+public class ContaAprovaProducer {
 
     @Autowired
     private RabbitTemplate template;
 
-    // Seq 3
-    public void setAuthMessage(MensagemDTO dto) {
-        template.convertAndSend(ConfigAlteraGerente.queueAuthAlteraGerente().getName(), dto);
+    // seq 1
+    public void setContaMessage(MensagemDTO dto) {
+        template.convertAndSend(ConfigAprovaCliente.queueAprovaContaProducer().getName(), dto);
     }
+
 }

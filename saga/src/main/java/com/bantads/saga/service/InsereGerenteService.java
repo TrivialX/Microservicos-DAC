@@ -3,7 +3,7 @@ package com.bantads.saga.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bantads.saga.DTO.AuthAutoCadastroDTO;
+import com.bantads.saga.DTO.AutoCadastroDTO;
 import com.bantads.saga.DTO.GerenteDTO;
 import com.bantads.saga.DTO.MensagemDTO;
 import com.bantads.saga.sagas.insereGerente.AuthInsereGerenteProducer;
@@ -36,7 +36,7 @@ public class InsereGerenteService {
         cprod.setContaInsereGerenteMessage(msg);
     }
 
-    public void setAuthIGMessage(AuthAutoCadastroDTO dto){
+    public void setAuthIGMessage(AutoCadastroDTO dto){
         MensagemDTO msg = new MensagemDTO();
         msg.setMensagem("");
         msg.setData(dto);

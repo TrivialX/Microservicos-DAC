@@ -5,7 +5,6 @@ import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-
 @Configuration
 @EnableRabbit
 public class ConfigAutoCadastro {
@@ -22,7 +21,7 @@ public class ConfigAutoCadastro {
 
     @Bean
     public static Queue queueAutoCadGerente() {
-        return new Queue("saga-gerente-autocadstro-init", true);
+        return new Queue("saga-gerente-autocadastro-init", true);
     }
 
     @Bean
@@ -50,5 +49,4 @@ public class ConfigAutoCadastro {
         return new Queue("saga-auth-autocadastro-end", true);
     }
 
- 
 }

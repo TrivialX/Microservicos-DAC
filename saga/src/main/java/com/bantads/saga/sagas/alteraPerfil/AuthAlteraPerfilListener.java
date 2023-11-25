@@ -1,21 +1,17 @@
-package com.bantads.saga.sagas.autoCadastro;
+package com.bantads.saga.sagas.alteraPerfil;
 
 import java.security.NoSuchAlgorithmException;
 
-
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.modelmapper.ModelMapper;
 import org.springframework.messaging.handler.annotation.Payload;
 
-//import com.bantads.saga.DTO.AuthAutoCadastroDTO;
 import com.bantads.saga.DTO.MensagemDTO;
-//import com.bantads.saga.service.AutoCadastroService;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AuthAutoCadastroListener {
-
+public class AuthAlteraPerfilListener {
+    
+    
     /*
      * @Autowired
      * private ModelMapper mapper;
@@ -25,7 +21,7 @@ public class AuthAutoCadastroListener {
      */
 
     // seq 6
-    @RabbitListener(queues = "saga-auth-autocadastro-end")
+    @RabbitListener(queues = "saga-auth-alteraperfil-end")
     public void receiveMessageSaga(@Payload MensagemDTO message) throws NoSuchAlgorithmException {
         try {
             // AuthAutoCadastroDTO Authcadastro = mapper.map(message.getData(),
@@ -36,5 +32,4 @@ public class AuthAutoCadastroListener {
         }
 
     }
-
 }

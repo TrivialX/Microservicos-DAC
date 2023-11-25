@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 @EnableRabbit
 public class ConfigAlteraGerente {
 
-    
     @Bean
     public static Queue queueAlteraGerenteReceiver() {
         return new Queue("saga-gerente-alteragerente-end", true);
@@ -29,5 +28,5 @@ public class ConfigAlteraGerente {
     public static Queue queueAuthAlteraGerenteReceiver() {
         return new Queue("saga-auth-alteragerente-end", true);
     }
-    
+
 }

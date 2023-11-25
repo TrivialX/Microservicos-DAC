@@ -3,8 +3,8 @@ package com.bantads.saga.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bantads.saga.DTO.AuthAutoCadastroDTO;
-import com.bantads.saga.DTO.ClienteAutoCadastroDTO;
+import com.bantads.saga.DTO.AutoCadastroDTO;
+import com.bantads.saga.DTO.ClienteDTO;
 import com.bantads.saga.DTO.MensagemDTO;
 import com.bantads.saga.sagas.autoCadastro.AuthAutoCadastroProducer;
 import com.bantads.saga.sagas.autoCadastro.ClienteAutoCadastroProducer;
@@ -22,14 +22,14 @@ public class AutoCadastroService {
     @Autowired
     private ContaAutoCadastroProducer contaprod;
 
-    public void initSagaAutoCadastro(ClienteAutoCadastroDTO dto) {
+    public void initSagaAutoCadastro(ClienteDTO dto) {
         MensagemDTO msg = new MensagemDTO();
         msg.setMensagem("");
         msg.setData(dto);
         clienteprod.initAutoCadastro(msg);
     }
 
-    public void setContaAutoCadastro(ClienteAutoCadastroDTO dto) {
+    public void setContaAutoCadastro(ClienteDTO dto) {
         MensagemDTO msg = new MensagemDTO();
         msg.setMensagem("");
         msg.setData(dto);
@@ -37,7 +37,7 @@ public class AutoCadastroService {
     }
 
 
-    public void setAuthAutoCadastro (AuthAutoCadastroDTO dto){
+    public void setAuthAutoCadastro (AutoCadastroDTO dto){
         MensagemDTO msg = new MensagemDTO();
         msg.setMensagem("");
         msg.setData(dto);

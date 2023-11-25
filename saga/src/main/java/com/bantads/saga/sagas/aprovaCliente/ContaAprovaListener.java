@@ -1,4 +1,4 @@
-package com.bantads.saga.sagas.alteraGerente;
+package com.bantads.saga.sagas.aprovaCliente;
 
 import java.security.NoSuchAlgorithmException;
 
@@ -6,32 +6,32 @@ import org.modelmapper.ModelMapper;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Payload;
+import com.bantads.saga.DTO.SituacaoClienteDTO;
+import com.bantads.saga.DTO.ContaDTO;
+import com.bantads.saga.DTO.MensagemDTO;
 import org.springframework.stereotype.Component;
 
-import com.bantads.saga.DTO.GerenteDTO;
-import com.bantads.saga.DTO.MensagemDTO;
-
 @Component
-public class GerenteAlteraGerenteListener {
-
+public class ContaAprovaListener {
     @Autowired
     private ModelMapper mapper;
-    
-    @Autowired
-    AuthAlteraGerenteProducer prod;
 
-    // seq 2
-    @RabbitListener(queues = "saga-gerente-alteragerente-end")
+    @Autowired
+    private AuthAprovaProducer prod;
+
+    //seq 2
+    @RabbitListener(queues = "saga-conta-aprova-end")
     public void receiveMessageSaga(@Payload MensagemDTO message) throws NoSuchAlgorithmException {
-        try {
-            GerenteDTO gerente = mapper.map(message.getData(), GerenteDTO.class);
-            MensagemDTO msg = new MensagemDTO();
-            msg.setMensagem("");
-            msg.setData(gerente);
+         try {
+            ContaDTO conta = mapper.map(message.getData(), ContaDTO.class);
+            SituacaoClienteDTO msg = new SituacaoClienteDTO();
+            msg.setId_cliente(conta.getId_cliente());
+            msg.setSituacao("APROVADO");
             prod.setAuthMessage(msg);
         } catch (Exception e) {
             System.out.println("erro " + e);
         }
+
 
     }
 }
