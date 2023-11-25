@@ -6,6 +6,7 @@ import com.conta.DTOS.ContaSagaDTO;
 import com.conta.DTOS.Message;
 import com.conta.models.CUD.ContaCUD;
 import com.conta.models.R.ContaR;
+import com.conta.models.R.MovimentacoesR;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.amqp.core.Queue;
@@ -16,6 +17,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
 
 @Service
 public class RabbitService {
@@ -29,6 +31,9 @@ public class RabbitService {
 
     @Autowired
     private ContaServiceR contaServiceR;
+
+    @Autowired
+    private MovimentacaoServiceR movimentacaoServiceR;
 
     @Autowired
     RabbitTemplate rabbitTemplate;
@@ -70,8 +75,31 @@ public class RabbitService {
 
     }
 
+    @RabbitListener(queues = "atualiza-movimentacao")
+    public void receiveMessageAtualizaMovimentacao(@Payload Message message){
+        try{
+            MovimentacoesR movi =  mapper.map(message.getData(), MovimentacoesR.class);
+            movi.setDatahora(LocalDateTime.now());
+            this.movimentacaoServiceR.atualizaMovimentacao(movi);
+        }catch (Exception ex){
+            System.out.println("Deu pau ao enviar novo deposito atualizacao");
+        }
+
+    }
+
     @RabbitListener(queues = "atualiza-conta")
     public void receiveMessageAtualizaConta(@Payload Message message){
+        try{
+            ContaR conta = mapper.map(message.getData(), ContaR.class);
+            this.contaServiceR.atualizarConta(conta);
+
+        }catch (Exception ex){
+            System.out.println("Deu ruim att conta R");
+        }
+    }
+
+    @RabbitListener(queues = "atualiza-conta-saga")
+    public void receiveMessageAtualizaContaSaga(@Payload Message message){
         try{
             ContaR conta = mapper.map(message.getData(), ContaR.class);
             System.out.println(conta.toString());
@@ -99,7 +127,7 @@ public class RabbitService {
             this.sendMessage("saga-conta-autocadastro-end", msg);
 
             msg.setData(conta);
-            this.sendMessage("atualiza-conta", msg);
+            this.sendMessage("atualiza-conta-saga", msg);
 
         }catch (Exception ex){
             Message msg = new Message();

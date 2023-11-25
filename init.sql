@@ -11,7 +11,7 @@ CREATE TABLE tbl_conta (
 
 CREATE TABLE tbl_movimentacoes (
 id SERIAL PRIMARY KEY,
-type VARCHAR(255),
+tipo VARCHAR(255),
 value DOUBLE PRECISION,
 conta_id BIGINT,
 conta_destiny BIGINT,
