@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 
+import com.example.demo.DTOS.AprovaClienteDTO;
 import com.example.demo.DTOS.AutocadastroDTO;
 import com.example.demo.DTOS.Message;
 import com.example.demo.models.Auth;
@@ -32,9 +33,9 @@ public class RabbitService {
     @Autowired
     AuthRepository authRepo;
 
-
     @Autowired
-    Queue queue1;
+    AuthService authService;
+
 
     @Autowired
     EmailService emailService;
@@ -146,6 +147,14 @@ public class RabbitService {
         emailService.enviarEmail(email, emailTitle, emailMessage);
    }
 
+   private void SendEmailWelcomeCliente(String email, String nome){
+       String emailTitle;
+       String emailMessage;
+       emailTitle = "Bem-Vindo ao BanTads";
+       emailMessage = "Olá " + nome + ", Seja bme vindo ao nogocinho";
+       emailService.enviarEmail(email, emailTitle, emailMessage);
+   }
+
 
     @RabbitListener(queues = "saga-auth-autocadastro-init")
     public void receiveMessageSaga(@Payload Message message){
@@ -155,13 +164,7 @@ public class RabbitService {
 
             auth.setTipoUser("CLIENTE");
 
-            String aux = Encrypt.gerarSenhaAleatoria();
-            String salt = Encrypt.gerarSalt();
-            String senha = Encrypt.gerarSenhaSegura(aux, salt);
-
-            auth.setSalt(salt);
-            auth.setSenha(senha);
-            auth.setIdUser(base.getId_cliente());
+            auth.setUsuario(base.getId_cliente());
 
             try {
                 this.authRepo.save(auth);
@@ -177,8 +180,7 @@ public class RabbitService {
                 return;
             }
 
-
-            this.SendEmailWelcome(auth.getEmail(), auth.getNome(), auth.getSenha(), auth.getTipoUser());
+            this.SendEmailWelcomeCliente(auth.getEmail(), auth.getNome());
             base.setSenha(auth.getSenha());
 
             Message msg = new Message();
@@ -196,6 +198,49 @@ public class RabbitService {
             this.sendMessage("saga-auth-autocadastro-end", msg );
         }
     }
+
+    @RabbitListener(queues = "saga-auth-aprova-init")
+    public void receiveMessageSagaAprova(@Payload Message message){
+        try {
+            AprovaClienteDTO base = mapper.map(message.getData(), AprovaClienteDTO.class);
+            Long id = base.getId_cliente();
+
+            Auth auth = this.authService.buscaUser(id);
+
+            if(auth == null) {
+                Message msg = new Message();
+                msg.setMensagem("SEM CLIENTE PARA ESSE ID: " + id);
+                msg.setErro(true);
+                this.sendMessage("saga-auth-aprova-end", msg);
+                return;
+            }
+
+            String senha_base = Encrypt.gerarSenhaAleatoria();
+            String salt = Encrypt.gerarSalt();
+            String senha = Encrypt.gerarSenhaSegura(senha_base, salt);
+            auth.setSalt(salt);
+            auth.setSenha(senha);
+
+            this.authService.save(auth);
+
+            this.SendEmailWelcome(auth.getEmail(), auth.getNome(), senha_base, auth.getTipoUser());
+
+            Message msg = new Message();
+            msg.setData(null);
+            msg.setMensagem("OK");
+            this.sendMessage("saga-auth-aprova-end", msg);
+
+        }catch (Exception ex){
+            System.out.println("Aprova deu ruim");
+            Message msg = new Message();
+            msg.setData(null);
+            msg.setMensagem(ex.getMessage());
+            msg.setErro(true);
+            this.sendMessage("saga-auth-aprova-end", msg );
+        }
+
+    }
+
 
 
 

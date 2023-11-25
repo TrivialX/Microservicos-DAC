@@ -8,4 +8,6 @@ public interface AuthRepository extends MongoRepository<Auth, String> {
     Auth findByEmailAndSenha(String email, String senha);
 
     Auth findByEmail(String email);
+
+    Auth findByUsuario(Long id);
 }

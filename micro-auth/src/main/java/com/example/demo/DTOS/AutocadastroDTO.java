@@ -15,7 +15,7 @@ public class AutocadastroDTO implements Serializable {
 
     private Long id_cliente;
 
-    private Long gerenteId;
+    private Long id_gerente;
 
     private Double saldo;
 

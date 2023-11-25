@@ -52,7 +52,7 @@ public class RabbitService {
         AutocadastroDTO a = new AutocadastroDTO();
         a.setSaldo(10.0);
         a.setLimite(10.000);
-        a.setGerenteId(1L);
+        a.setId_gerente(1L);
         a.setId_cliente(1L);
         a.setSituacao("Pendente");
         System.out.println("rato gerado: " + message);

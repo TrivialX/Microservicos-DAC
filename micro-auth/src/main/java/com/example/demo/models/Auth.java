@@ -19,7 +19,7 @@ public class Auth {
 
     private String tipoUser;
 
-    private Long idUser;
+    private Long usuario;
 
 
     public Auth(String nome, String email, String senha, String salt, String tipoUser, Long idUser ) {
@@ -28,7 +28,7 @@ public class Auth {
         this.senha = senha;
         this.salt = salt;
         this.tipoUser = tipoUser;
-        this.idUser = idUser;
+        this.usuario = idUser;
     }
 
     public String getId() {
@@ -71,12 +71,12 @@ public class Auth {
         this.tipoUser = tipoUser;
     }
 
-    public Long getIdUser() {
-        return idUser;
+    public Long getUsuario() {
+        return usuario;
     }
 
-    public void setIdUser(Long idUser) {
-        this.idUser = idUser;
+    public void setUsuario(Long idUser) {
+        this.usuario = idUser;
     }
 
     public String getSalt() {

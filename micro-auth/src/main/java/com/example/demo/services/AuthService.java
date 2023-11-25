@@ -15,8 +15,8 @@ public class AuthService {
     AuthRepository repo;
 
 
-    public void save(String nome, String email, String senha, String salt, String tipUser, Long idUser){
-        this.repo.save(new Auth(nome,email, senha,salt, tipUser, idUser));
+    public void save(Auth auth){
+        this.repo.save(auth);
     }
 
     public Auth autenticar(String email, String senha) throws NoSuchAlgorithmException {
@@ -34,5 +34,10 @@ public class AuthService {
         }
 
         return null;
+    }
+
+    public Auth buscaUser(Long id){
+        return this.repo.findByUsuario(id);
+
     }
 }

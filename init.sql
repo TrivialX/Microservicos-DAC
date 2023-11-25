@@ -8,6 +8,10 @@ CREATE TABLE tbl_conta (
     observacao TEXT               -- Coluna para observações longas (texto)
 );
 
+INSERT INTO tbl_conta (id_cliente,gerente_id,saldo,limite,situacao) VALUES
+(1,1,10,0,"APROVADO"),
+(2,1,20,0,"APROVADO"),
+(3,2,5,0,"APROVADO");
 
 CREATE TABLE tbl_movimentacoes (
 id SERIAL PRIMARY KEY,

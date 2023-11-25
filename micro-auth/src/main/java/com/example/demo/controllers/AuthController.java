@@ -1,9 +1,11 @@
 package com.example.demo.controllers;
 
+import com.example.demo.DTOS.AuthDTO;
 import com.example.demo.models.Auth;
 import com.example.demo.DTOS.LoginDTO;
 import com.example.demo.services.AuthService;
 import com.example.demo.services.EmailService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +23,16 @@ public class AuthController {
     @Autowired
     EmailService emailService;
 
+    @Autowired
+    ModelMapper modelMapper;
 
     @PostMapping("")
-    ResponseEntity<Auth> logar(@RequestBody LoginDTO loginDTORequest) throws NoSuchAlgorithmException {
+    ResponseEntity<AuthDTO> logar(@RequestBody LoginDTO loginDTORequest) throws NoSuchAlgorithmException {
         Auth user = authService.autenticar(loginDTORequest.getEmail(), loginDTORequest.getSenha());
+        AuthDTO Auth = modelMapper.map(user, AuthDTO.class);
+
         if(user != null){
-            return ResponseEntity.ok().body(user);
+            return ResponseEntity.ok().body(Auth);
         }else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }

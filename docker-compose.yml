@@ -1,22 +1,24 @@
-version: '3.7'
+version: '3'
 
 services:
- mongodb:
+  mongodb:
     networks:
       - bantads
     container_name: mongodb
     image: mongo
+    volumes:
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
     ports:
       - "27017:27017"
 
- auth-service:
-    image: your-docker-username/auth-service:latest
-    container_name: auth-service
-    depends_on:
-      - mongodb
-    environment:
-      - SPRING_DATASOURCE_URL=mongodb://admin:secret@mongodb:27017/auth-db
-
+  rabbitmq:
+    container_name: rabbitmq
+    networks:
+      - bantads
+    image: rabbitmq:3.12-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
 
   postgres-conta-r:
     image: postgres
@@ -25,6 +27,8 @@ services:
       POSTGRES_PASSWORD: "postgress"
     ports:
       - "5432:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/script.sql
     networks:
       - bantads
 
@@ -35,17 +39,12 @@ services:
       POSTGRES_PASSWORD: "postgress"
     ports:
       - "5433:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/script.sql
     networks:
       - bantads
       
-  rabbitmq:
-    container_name: rabbitmq
-    networks:
-      - bantads
-    image: rabbitmq:3.12-management
-    ports:
-      - "5672:5672"
-      - "15672:15672"
+  
   
   micro-conta:
     container_name: micro-conta
@@ -68,7 +67,7 @@ services:
       - mongodb
       - rabbitmq
     ports:
-      - "5005:8080"
+      - "5000:8080"
 
 networks:
   bantads:
