@@ -1,5 +1,7 @@
 package gerentews.com.bantads.model;
 
+
+
 public class IdMensagemDTO {
     private Long id;
     private String message;
