@@ -82,7 +82,7 @@ public class RabbitService {
         ContaR conta = new ContaR();
 
         conta.setLimite(10.0);
-        conta.setGerente_id(1L);
+        conta.setGerenteId(1L);
         conta.setId_cliente(1L);
 
         this.contaServiceR.atualizarConta(conta);
@@ -165,7 +165,7 @@ public class RabbitService {
             contaService.atualizarIdsDoGerente(contasCUD, gerMenosCont);
             MessageListDTO messlist = new MessageListDTO();
             messlist.setData(contasCUD);
-            this.sendMessageID("saga-conta-autocadastro-end", message);
+            this.sendMessageID("saga-conta-deletegerente-end", message);
             this.sendMessageList("atualiza-conta-saga", messlist);
 
         }catch (Exception ex){
@@ -173,7 +173,7 @@ public class RabbitService {
             msg.setData(null);
             msg.setMensagem(ex.getMessage());
             msg.setErro(true);
-            this.sendMessage("saga-conta-autocadastro-end", msg );
+            this.sendMessage("saga-conta-deletegerente-end", msg );
         }
 
     }
@@ -188,7 +188,7 @@ public class RabbitService {
 
             ContaR contaR = this.contaServiceR.buscaContaPorIdCliente(clieteDTO.getId());
 
-            System.out.println("GERENTE CONTAR: " +contaR.getGerente_id());
+            System.out.println("GERENTE CONTAR: " +contaR.getGerenteId());
             ContaCUD contaCUD = mapper.map(contaR,ContaCUD.class);
             System.out.println("GERENTE contaCUD: " +contaCUD.getGerente_id());
 

@@ -12,6 +12,6 @@ public interface ContaRepositoryR extends JpaRepository<ContaR, Long> {
     @Query(value="SELECT * FROM tbl_conta WHERE id_cliente = ?1", nativeQuery=true)
     ContaR buscaContaPorIdCliente(Long id_cliente);
 
-    List<ContaR> findByGerenteId(Long gerenteId);
+    List<ContaR> findByGerenteId(Long gerente_id);
 
 }

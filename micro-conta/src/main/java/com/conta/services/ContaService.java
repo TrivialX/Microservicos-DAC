@@ -61,7 +61,7 @@ public class ContaService {
     @Transactional
     public void atualizarIdsDoGerente(List<ContaCUD> contas, Long novoIdGerente) {
         for (ContaCUD conta : contas) {
-            conta.setGerenteId(novoIdGerente);
+            conta.setGerente_id(novoIdGerente);
         }
         contaRepoCUD.saveAll(contas);
     }
