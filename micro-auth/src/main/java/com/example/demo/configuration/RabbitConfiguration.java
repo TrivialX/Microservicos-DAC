@@ -51,6 +51,17 @@ public class RabbitConfiguration {
     @Bean Queue queue7() {
         return new Queue("saga-auth-aprova-end", true);
     }
+
+    @Bean
+    Queue queue8() {
+        return new Queue("saga-auth-autocadastro-init", true);
+    }
+
+    @Bean
+    Queue queue9() {
+        return new Queue("saga-auth-autocadastro-end", true);
+    }
+
     
     @Bean
     public Jackson2JsonMessageConverter messageConverter(){

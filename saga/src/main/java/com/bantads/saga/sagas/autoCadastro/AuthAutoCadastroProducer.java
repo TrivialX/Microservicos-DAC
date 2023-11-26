@@ -13,6 +13,6 @@ public class AuthAutoCadastroProducer {
 
     // Seq 5
     public void setAuthMessage(MensagemDTO dto) {
-        template.convertAndSend(ConfigAutoCadastro.queueAutoCadAuth().getName(), dto);
+        template.convertAndSend("saga-auth-autocadastro-init", dto);
     }
 }

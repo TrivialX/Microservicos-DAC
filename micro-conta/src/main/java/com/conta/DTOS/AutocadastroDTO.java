@@ -28,4 +28,17 @@ public class AutocadastroDTO implements Serializable {
 
     private String senha;
 
+    private String nome;
+
+    private String cpf;
+    private String logradouro;
+    private String numero;
+    private String complemento;
+    private String tipo;
+    private String cidade;
+    private String estado;
+    private String cep;
+    private String telefone;
+    private double salario;
+
 }

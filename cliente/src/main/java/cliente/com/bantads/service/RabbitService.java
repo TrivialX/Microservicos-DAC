@@ -81,6 +81,8 @@ public class RabbitService {
             Cliente cliente = mapper.map(autocadastro, Cliente.class);
             this.clienteServiceImp.salvarCliente(cliente);
 
+            autocadastro.setId_cliente(cliente.getId());
+
             Message msg = new Message();
             msg.setData(autocadastro);
 

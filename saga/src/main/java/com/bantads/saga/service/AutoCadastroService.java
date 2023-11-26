@@ -22,14 +22,14 @@ public class AutoCadastroService {
     @Autowired
     private ContaAutoCadastroProducer contaprod;
 
-    public void initSagaAutoCadastro(ClienteDTO dto) {
+    public void initSagaAutoCadastro(AutoCadastroDTO dto) {
         MensagemDTO msg = new MensagemDTO();
         msg.setMensagem("");
         msg.setData(dto);
         clienteprod.initAutoCadastro(msg);
     }
 
-    public void setContaAutoCadastro(ClienteDTO dto) {
+    public void setContaAutoCadastro(AutoCadastroDTO dto) {
         MensagemDTO msg = new MensagemDTO();
         msg.setMensagem("");
         msg.setData(dto);

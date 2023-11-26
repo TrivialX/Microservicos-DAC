@@ -2,6 +2,7 @@ package com.bantads.saga.sagas.autoCadastro;
 
 import java.security.NoSuchAlgorithmException;
 
+import com.bantads.saga.DTO.AutoCadastroDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class ClienteAutoCadastroListener {
     @RabbitListener(queues = "saga-cliente-autocadastro-end")
     public void receiveMessageSaga(@Payload MensagemDTO message) throws NoSuchAlgorithmException {
         try {
-            ClienteDTO clienteACDTO = mapper.map(message.getData(), ClienteDTO.class);
+            AutoCadastroDTO clienteACDTO = mapper.map(message.getData(), AutoCadastroDTO.class);
             aService.setContaAutoCadastro(clienteACDTO);
         } catch (Exception e) {
             System.out.println("erro " + e);

@@ -198,5 +198,21 @@ public class ContaController {
 
     }
 
+    @GetMapping("/conta/teste")
+    void teste(){
+//        List<Object[]> resultados = this.contaService.buscaGerentesContas();
+//        StringBuilder resposta = new StringBuilder();
+//        for (Object[] resultado : resultados) {
+//            Long gerenteId = (Long) resultado[0];
+//            Long count = (Long) resultado[1];
+//
+//            resposta.append("Gerente ID: ").append(gerenteId).append(", Contagem: ").append(count).append("\n");
+//        }
+
+        System.out.println("asdasda");
+
+    }
+
+
 
 }

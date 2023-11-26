@@ -23,7 +23,6 @@ public class RabbitService {
 
     @Autowired
     private ModelMapper mapper;
-
     
     @RabbitListener(queues = "saga-gerente-deletegerente-init")
     public void deleteGerente(@Payload IdMensagemDTO message) throws NoSuchAlgorithmException {

@@ -23,6 +23,7 @@ public class SagaApplication {
     }
 
     @Bean
+
     public MessageConverter jsonMessageConverter() {
         final ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);

@@ -19,7 +19,7 @@ public class ContaAlteraPerfilListener {
     private ContaAlteraPerfilProducer prod;
 
     //seq 4
-    @RabbitListener(queues = "saga-conta-autocadastro-end")
+    @RabbitListener(queues = "saga-conta-alteraperfil-end")
     public void receiveMessageSaga(@Payload MensagemDTO message) throws NoSuchAlgorithmException {
          try {
             AutoCadastroDTO clienteAPDTO = mapper.map(message.getData(), AutoCadastroDTO.class);

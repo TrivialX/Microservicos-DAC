@@ -14,7 +14,7 @@ public class ContaAutoCadastroProducer {
     
     //Seq 3
     public void setContaMessage(MensagemDTO dto) {
-        template.convertAndSend(ConfigAutoCadastro.queueAutoCadConta().getName(), dto);
+        template.convertAndSend("saga-conta-autocadastro-init", dto);
     }
     
 }

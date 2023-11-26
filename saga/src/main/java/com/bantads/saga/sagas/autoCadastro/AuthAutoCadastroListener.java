@@ -28,9 +28,11 @@ public class AuthAutoCadastroListener {
     @RabbitListener(queues = "saga-auth-autocadastro-end")
     public void receiveMessageSaga(@Payload MensagemDTO message) throws NoSuchAlgorithmException {
         try {
-            // AuthAutoCadastroDTO Authcadastro = mapper.map(message.getData(),
-            // AuthAutoCadastroDTO.class);
-            // email
+            if(message.isErro())
+                System.out.println("Saga Autocadastro Deu Erro");
+            else
+                System.out.println("Saga Autocadastro Finalizada");
+
         } catch (Exception e) {
             System.out.println("erro " + e);
         }

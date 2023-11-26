@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -32,5 +33,17 @@ public class ContaServiceR {
         }
 
     }
+
+    @Transactional("rTransactionManager")
+    public Long buscaGerentesContas(){
+        try{
+            return this.contaRepoR.countByGerenteId();
+        }catch (Exception ex){
+            System.out.println("Conta deu pau R");
+        }
+
+        return null;
+    }
+
 
 }

@@ -17,6 +17,20 @@ public class AutoCadastroDTO {
 
     private String senha;
 
+    private String nome;
+
+    private String cpf;
+    private String logradouro;
+    private String numero;
+    private String complemento;
+    private String tipo;
+    private String cidade;
+    private String estado;
+    private String cep;
+    private String telefone;
+    private double salario;
+
+
     public AutoCadastroDTO() {
     }
     
@@ -31,6 +45,28 @@ public class AutoCadastroDTO {
         this.observacao = observacao;
         this.email = email;
         this.senha = senha;
+    }
+
+    public AutoCadastroDTO(Long id_cliente, Long id_gerente, Double saldo, Double limite, String situacao, String observacao, String email, String senha, String nome, String cpf, String logradouro, String numero, String complemento, String tipo, String cidade, String estado, String cep, String telefone, double salario) {
+        this.id_cliente = id_cliente;
+        this.id_gerente = id_gerente;
+        this.saldo = saldo;
+        this.limite = limite;
+        this.situacao = situacao;
+        this.observacao = observacao;
+        this.email = email;
+        this.senha = senha;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.complemento = complemento;
+        this.tipo = tipo;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.cep = cep;
+        this.telefone = telefone;
+        this.salario = salario;
     }
 
 
@@ -100,6 +136,91 @@ public class AutoCadastroDTO {
     }
 
 
+    public String getNome() {
+        return nome;
+    }
 
-  
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getLogradouro() {
+        return logradouro;
+    }
+
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public double getSalario() {
+        return salario;
+    }
+
+    public void setSalario(double salario) {
+        this.salario = salario;
+    }
 }

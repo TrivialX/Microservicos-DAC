@@ -1,5 +1,6 @@
 package com.bantads.saga.api;
 
+import com.bantads.saga.DTO.AutoCadastroDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,7 +45,7 @@ public class SagaRestController {
 
 
     @PostMapping("/registrar")
-    public ResponseEntity<?> sagaAutocadastro(@RequestBody ClienteDTO dto) {
+    public ResponseEntity<?> sagaAutocadastro(@RequestBody AutoCadastroDTO dto) {
     	autoCadService.initSagaAutoCadastro(dto);
         return new ResponseEntity<>(HttpStatus.OK);
 

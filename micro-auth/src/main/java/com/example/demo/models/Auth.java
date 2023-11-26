@@ -31,6 +31,8 @@ public class Auth {
         this.usuario = idUser;
     }
 
+    public Auth(){}
+
     public String getId() {
         return id;
     }
