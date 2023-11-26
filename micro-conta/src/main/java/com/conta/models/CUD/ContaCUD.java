@@ -20,7 +20,7 @@ public class ContaCUD {
     private Long id_cliente;
 
     @Column(name = "gerente_id")
-    private Long gerente_id;
+    private Long gerenteId;
 
     @Column(name = "saldo")
     private Double saldo;

@@ -58,11 +58,20 @@ public class ContaService {
         }
     }
 
-    @Transactional
+    @Transactional("cudTransactionManager")
     public void atualizarIdsDoGerente(List<ContaCUD> contas, Long novoIdGerente) {
         for (ContaCUD conta : contas) {
-            conta.setGerente_id(novoIdGerente);
+            conta.setGerenteId(novoIdGerente);
         }
-        contaRepoCUD.saveAll(contas);
+
+        for (ContaCUD conta : contas) {
+            System.out.println("NOVO ID:" + conta.getGerenteId());
+        }
+
+        try {
+            this.contaRepoCUD.saveAll(contas);
+        }catch (Exception ex){
+                System.out.println("atualizarIdsDoGerente deu pau:" + ex);
+        }
     }
 }

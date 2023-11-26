@@ -166,7 +166,13 @@ public class RabbitService {
             MessageListDTO messlist = new MessageListDTO();
             messlist.setData(contasCUD);
             this.sendMessageID("saga-conta-deletegerente-end", message);
-            this.sendMessageList("atualiza-conta-saga", messlist);
+
+            for (ContaCUD conta: messlist.getData()) {
+                Message msg = new Message();
+                msg.setData(conta);
+                this.sendMessage("atualiza-conta-saga", msg);
+            }
+
 
         }catch (Exception ex){
             Message msg = new Message();
@@ -190,7 +196,7 @@ public class RabbitService {
 
             System.out.println("GERENTE CONTAR: " +contaR.getGerenteId());
             ContaCUD contaCUD = mapper.map(contaR,ContaCUD.class);
-            System.out.println("GERENTE contaCUD: " +contaCUD.getGerente_id());
+            System.out.println("GERENTE contaCUD: " +contaCUD.getGerenteId());
 
             Double limite = clieteDTO.getLimite();
 

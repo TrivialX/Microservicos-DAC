@@ -60,6 +60,8 @@ public class ContaController {
 
     @PostMapping("/conta/deposito/{id}")
     ResponseEntity<SaldoDTO> depositoController(@PathVariable Long id, @RequestBody DepositoDTO depositodto){
+        if(depositodto.getValor() == null)return ResponseEntity.status(404).build();
+
         if(depositodto.getValor() > 0.0){
             ContaR conta = this.contaService.getContaById(id);
             Double saldo_anterior = conta.getSaldo();
@@ -199,20 +201,28 @@ public class ContaController {
     }
 
     @GetMapping("/conta/teste")
-    void teste(@RequestBody ClienteDTO cl){
-        ClienteDTO clieteDTO = mapper.map(cl, ClienteDTO.class);
-        ContaR contaR = this.contaService.buscaContaPorIdCliente(clieteDTO.getId());
-        System.out.println("ContaR id: " + contaR.getId_cliente()+ ", LIMIT: " + contaR.getLimite());
-        ContaCUD contaCUD = mapper.map(contaR,ContaCUD.class);
+    void teste(){
+        Long id_gerente = 3L;
+        List <ContaR> contas = this.contaService.buscaContasGerente(id_gerente);
+        for (ContaR conta: contas) {
+            System.out.println("ID_GERENTE CONTA_R:" + conta.getGerenteId());
+        }
+        List<ContaCUD> contasCUD = contas.stream().map(conta -> mapper.map(conta, ContaCUD.class)).collect(Collectors.toList());
+        for (ContaCUD conta: contasCUD) {
+            System.out.println("ID_GERENTE CONTA_cud:" + conta.getGerenteId());
+        }
 
-        Double limite = clieteDTO.getLimite();
-        contaCUD.setLimite(limite);
+        Long gerMenosCont = this.contaService.buscaGerentesContas();
+        System.out.println("GERENTE MENOS CONTAS: " + gerMenosCont);
 
-        this.contaServiceCud.atualizaConta(contaCUD);
+        contaServiceCud.atualizarIdsDoGerente(contasCUD, gerMenosCont);
 
-        System.out.println("ContaCUD id: " + contaCUD.getId_cliente() + ", LIMIT: " + contaCUD.getLimite());
+//        MessageListDTO messlist = new MessageListDTO();
+//        messlist.setData(contasCUD);
+//        this.sendMessageID("saga-conta-deletegerente-end", message);
+//        this.sendMessageList("atualiza-conta-saga", messlist);
 
-        System.out.println("asdasda");
+
     }
 
 }

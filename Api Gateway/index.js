@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const express = require("express");
 const httpProxy = require("express-http-proxy");
 const helmet = require("helmet");
+const cors = require('cors');
 const app = express();
 
 var http = require("http");
@@ -22,6 +23,7 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
+app.use(cors())
 
 const authServiceProxy = httpProxy("http://localhost:5000", {
     proxyReqBodyDecorator: function(bodyContent, srcReq){
@@ -62,6 +64,9 @@ const authServiceProxy = httpProxy("http://localhost:5000", {
 
 
 const proxyConta = httpProxy('http://localhost:5005', {});
+const proxyCliente = httpProxy('http://localhost:5009', {});
+
+
 // const usuariosServiceProxy = httpProxy("http://localhost:5000");
 // const boisServiceProxy = httpProxy("http://localhost:5001");
 
@@ -110,6 +115,20 @@ app.get('/conta/extrato/:id', verifyJWT, (req, res, next) => {
     req.url = `/conta/extrato/${req.params.id}`;
     proxyConta(req, res, next);
 });
+
+//conta por id
+app.get("/conta/:id", verifyJWT,  (req, res, next) => {
+    req.url = `/conta/${req.params.id}`;
+    proxyConta(req, res, next);
+});
+
+
+//cliente por id
+app.get("/clientes/:id", verifyJWT, (req, res, next) => {
+    req.url = `/clientes/${req.params.id}`;
+    proxyCliente(req, res, next);
+});
+
 
 
 app.post("/logout", function(req, res){
