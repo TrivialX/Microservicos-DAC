@@ -23,8 +23,8 @@ CREATE TABLE IF NOT EXISTS tbl_movimentacoes (
 
 INSERT INTO tbl_conta (id_cliente, gerente_id, saldo, limite, situacao, observacao)
 VALUES
-  (1, 101, 5000.00, 1000.00, 'Ativa', 'Conta corrente para gastos diários'),
-  (2, 102, 8000.00, 2000.00, 'Ativa', 'Conta de poupança para emergências'),
-  (3, 103, 12000.00, 3000.00, 'Inativa', 'Conta bloqueada devido a transações suspeitas');
+  (1, 1, 5000.00, 1000.00, 'Ativa', 'Conta corrente para gastos diários'),
+  (2, 2, 8000.00, 2000.00, 'Ativa', 'Conta de poupança para emergências'),
+  (3, 3, 12000.00, 3000.00, 'Inativa', 'Conta bloqueada devido a transações suspeitas');
 
 
