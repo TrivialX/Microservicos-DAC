@@ -14,6 +14,6 @@ public class ClienteAutoCadastroProducer {
     
     //Seq 1
     public void initAutoCadastro(MensagemDTO dto) {
-        template.convertAndSend(ConfigAutoCadastro.queueAutoCadCliente().getName(), dto);
+        template.convertAndSend("saga-cliente-autocadastro-init", dto);
     }
 }

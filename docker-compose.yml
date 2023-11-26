@@ -111,6 +111,16 @@ services:
     ports:
       - "5000:8080"
 
+  saga:
+    container_name: saga
+    image: saga:0.0.1-SNAPSHOT
+    networks:
+      - bantads
+    depends_on:
+      - rabbitmq
+    ports:
+      - "5015:8080"
+
 networks:
   bantads:
     driver: bridge

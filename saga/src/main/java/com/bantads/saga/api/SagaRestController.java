@@ -1,5 +1,6 @@
 package com.bantads.saga.api;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,12 +42,15 @@ public class SagaRestController {
     @Autowired
     public ReprovaClienteService reprovaCliService;
 
+
     @PostMapping("/registrar")
     public ResponseEntity<?> sagaAutocadastro(@RequestBody ClienteDTO dto) {
-        autoCadService.initSagaAutoCadastro(dto);
+    	autoCadService.initSagaAutoCadastro(dto);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
 
+    }
+    
+        
     @PostMapping("/gerentes")
     public ResponseEntity<?> sagaInsereGerente(@RequestBody GerenteDTO dto) {
         insereGerService.initSagaInsereGerente(dto);

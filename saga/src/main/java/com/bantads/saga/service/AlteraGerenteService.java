@@ -1,5 +1,6 @@
 package com.bantads.saga.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bantads.saga.DTO.GerenteDTO;
@@ -8,7 +9,7 @@ import com.bantads.saga.sagas.alteraGerente.GerenteAlteraGerenteProducer;
 
 @Service
 public class AlteraGerenteService {
-
+    @Autowired
     private GerenteAlteraGerenteProducer prod;
 
     public void initSagaAlteraGerente(GerenteDTO dto) {
