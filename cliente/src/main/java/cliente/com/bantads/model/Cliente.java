@@ -24,14 +24,13 @@ public class Cliente implements Serializable {
 	private String telefone;
 	@Column(name = "salario")
 	private Double salario;
-	@Column(name = "id_gerente")
-	private Long id_gerente;
+
 	
 	public Cliente() {
 		
 	}
 	
-	public Cliente(Long id, String nome, String email, String cpf, String endereco, String telefone, Double salario, Long id_gerente) {
+	public Cliente(Long id, String nome, String email, String cpf, String endereco, String telefone, Double salario) {
 	    this.id = id;
 	    this.nome = nome;
 	    this.email = email;
@@ -39,7 +38,7 @@ public class Cliente implements Serializable {
 	    this.endereco = endereco;
 	    this.telefone = telefone;
 	    this.salario = salario;
-	    this.id_gerente = id_gerente;
+
 	}
 	
 	
@@ -87,11 +86,6 @@ public class Cliente implements Serializable {
 	public void setSalario(Double salario) {
 		this.salario = salario;
 	}
-	public Long getId_gerente() {
-		return id_gerente;
-	}
-	public void setId_gerente(Long id_gerente) {
-		this.id_gerente = id_gerente;
-	}
+
 
 }

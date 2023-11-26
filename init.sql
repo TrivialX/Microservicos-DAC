@@ -1,4 +1,4 @@
-CREATE TABLE tbl_conta (
+CREATE TABLE IF NOT EXISTS tbl_conta (
     id SERIAL PRIMARY KEY,        -- Coluna de ID auto-incrementável
     id_cliente BIGINT,            -- Coluna para o ID do cliente (tipo de dados depende dos requisitos)
     gerente_id BIGINT,            -- Coluna para o ID do gerente (tipo de dados depende dos requisitos)
@@ -8,7 +8,7 @@ CREATE TABLE tbl_conta (
     observacao TEXT               -- Coluna para observações longas (texto)
 );
 
-CREATE TABLE tbl_movimentacoes (
+CREATE TABLE IF NOT EXISTS tbl_movimentacoes (
     id SERIAL PRIMARY KEY,
     tipo VARCHAR(255),
     value DOUBLE PRECISION,
@@ -20,4 +20,11 @@ CREATE TABLE tbl_movimentacoes (
     saldo_final_conta_destiny DOUBLE PRECISION,
     dataHora TIMESTAMP DEFAULT NOW()
 );
+
+INSERT INTO tbl_conta (id_cliente, gerente_id, saldo, limite, situacao, observacao)
+VALUES
+  (1, 101, 5000.00, 1000.00, 'Ativa', 'Conta corrente para gastos diários'),
+  (2, 102, 8000.00, 2000.00, 'Ativa', 'Conta de poupança para emergências'),
+  (3, 103, 12000.00, 3000.00, 'Inativa', 'Conta bloqueada devido a transações suspeitas');
+
 

@@ -9,13 +9,13 @@ public class ClienteDTO implements Serializable{
 	private String endereco;
 	private String telefone;
 	private Double salario;
-	private Long id_gerente;
+
 	
 	public ClienteDTO() {
 		
 	}
 	
-	public ClienteDTO(Long id, String nome, String email, String cpf, String endereco, String telefone, Double salario, Long id_gerente) {
+	public ClienteDTO(Long id, String nome, String email, String cpf, String endereco, String telefone, Double salario) {
 	    this.id = id;
 	    this.nome = nome;
 	    this.email = email;
@@ -23,7 +23,7 @@ public class ClienteDTO implements Serializable{
 	    this.endereco = endereco;
 	    this.telefone = telefone;
 	    this.salario = salario;
-	    this.id_gerente = id_gerente;
+
 	}
 
 	public Long getId() {
@@ -81,14 +81,5 @@ public class ClienteDTO implements Serializable{
 	public void setSalario(Double salario) {
 		this.salario = salario;
 	}
-
-	public Long getId_gerente() {
-		return id_gerente;
-	}
-
-	public void setId_gerente(Long id_gerente) {
-		this.id_gerente = id_gerente;
-	}
-	
 
 }
