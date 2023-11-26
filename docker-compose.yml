@@ -55,7 +55,29 @@ services:
       - ./init_cliente.sql:/docker-entrypoint-initdb.d/init_cliente.sql
     networks:
       - bantads
-      
+
+  postgres-gerente:
+    image: postgres
+    container_name: postgres-gerente
+    environment:
+      POSTGRES_PASSWORD: "postgress"
+    ports:
+      - "5435:5432"
+    volumes:
+      - ./init_gerente.sql:/docker-entrypoint-initdb.d/init_gerente.sql
+    networks:
+      - bantads
+  
+  micro-gerente:
+    container_name: micro-gerente
+    image: gerente:0.0.1-SNAPSHOT
+    networks:
+      - bantads
+    depends_on:
+      - postgres-gerente
+    ports:
+      - "5008:8080"
+
   micro-cliente:
     container_name: micro-cliente
     image: cliente:0.0.1-SNAPSHOT
@@ -64,7 +86,7 @@ services:
     depends_on:
       - postgres-cliente
     ports:
-      - "5438:8080"
+      - "5009:8080"
   
   micro-conta:
     container_name: micro-conta

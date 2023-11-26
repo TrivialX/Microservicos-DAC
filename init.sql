@@ -8,20 +8,16 @@ CREATE TABLE tbl_conta (
     observacao TEXT               -- Coluna para observações longas (texto)
 );
 
-INSERT INTO tbl_conta (id_cliente,gerente_id,saldo,limite,situacao) VALUES
-(1,1,10,0,"APROVADO"),
-(2,1,20,0,"APROVADO"),
-(3,2,5,0,"APROVADO");
-
 CREATE TABLE tbl_movimentacoes (
-id SERIAL PRIMARY KEY,
-tipo VARCHAR(255),
-value DOUBLE PRECISION,
-conta_id BIGINT,
-conta_destiny BIGINT,
-saldo_anterior_conta_id DOUBLE PRECISION,
-saldo_final_conta_id DOUBLE PRECISION,
-saldo_anterior_conta_destiny DOUBLE PRECISION,
-saldo_final_conta_destiny DOUBLE PRECISION,
-dataHora TIMESTAMP DEFAULT NOW()
+    id SERIAL PRIMARY KEY,
+    tipo VARCHAR(255),
+    value DOUBLE PRECISION,
+    conta_id BIGINT,
+    conta_destiny BIGINT,
+    saldo_anterior_conta_id DOUBLE PRECISION,
+    saldo_final_conta_id DOUBLE PRECISION,
+    saldo_anterior_conta_destiny DOUBLE PRECISION,
+    saldo_final_conta_destiny DOUBLE PRECISION,
+    dataHora TIMESTAMP DEFAULT NOW()
 );
+
