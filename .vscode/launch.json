@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-SagaApplication<saga>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.bantads.saga.SagaApplication",
+            "projectName": "saga",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
