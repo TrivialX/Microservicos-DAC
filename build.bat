@@ -6,6 +6,10 @@ cd micro-auth
 call ./mvnw spring-boot:build-image -DskipTests
 cd..
 
+cd cliente
+call ./mvnw spring-boot:build-image -DskipTests
+cd..
+
 cd micro-conta
 call ./mvnw spring-boot:build-image -DskipTests
 cd ..

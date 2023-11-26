@@ -43,8 +43,28 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/script.sql
     networks:
       - bantads
-      
   
+  postgres-cliente:
+    image: postgres
+    container_name: postgres-cliente
+    environment:
+      POSTGRES_PASSWORD: "postgress"
+    ports:
+      - "5434:5432"
+    volumes:
+      - ./init_cliente.sql:/docker-entrypoint-initdb.d/init_cliente.sql
+    networks:
+      - bantads
+      
+  micro-cliente:
+    container_name: micro-cliente
+    image: cliente:0.0.1-SNAPSHOT
+    networks:
+      - bantads
+    depends_on:
+      - postgres-cliente
+    ports:
+      - "5438:8080"
   
   micro-conta:
     container_name: micro-conta
