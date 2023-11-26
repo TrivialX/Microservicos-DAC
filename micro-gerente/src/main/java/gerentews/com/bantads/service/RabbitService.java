@@ -1,6 +1,7 @@
 package gerentews.com.bantads.service;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -28,12 +29,19 @@ public class RabbitService {
     public void deleteGerente(@Payload IdMensagemDTO message) throws NoSuchAlgorithmException {
         try {
             Long id = message.getId();
+            List<Gerente> gers = gerService.listaGerentes();
+            if (gers.size() <= 1){
+            IdMensagemDTO mensagem = new IdMensagemDTO();
+             mensagem.setErro(true);
+             mensagem.setMessage(" impossivel deletar o ultimo gerente");
+             rabbitTemplate.convertAndSend("saga-gerente-deletegerente-end", mensagem);
+            }else{
             gerService.deletarGerente(id);
             IdMensagemDTO mensagem = new IdMensagemDTO();
             mensagem.setId(id);
             mensagem.setMessage("gerente deletado do gerenteMS");
             rabbitTemplate.convertAndSend("saga-gerente-deletegerente-end", mensagem);
-
+            }
         } catch (Exception e) {
              IdMensagemDTO mensagem = new IdMensagemDTO();
              mensagem.setErro(true);

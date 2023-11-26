@@ -8,8 +8,6 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
-
-import com.bantads.saga.DTO.ClienteDTO;
 import com.bantads.saga.DTO.MensagemDTO;
 import com.bantads.saga.service.AutoCadastroService;
 

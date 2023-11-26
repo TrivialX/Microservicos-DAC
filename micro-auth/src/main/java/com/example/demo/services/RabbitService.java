@@ -3,6 +3,7 @@ package com.example.demo.services;
 
 import com.example.demo.DTOS.AprovaClienteDTO;
 import com.example.demo.DTOS.AutocadastroDTO;
+import com.example.demo.DTOS.IdMensagemDTO;
 import com.example.demo.DTOS.Message;
 import com.example.demo.models.Auth;
 import com.example.demo.repository.AuthRepository;
@@ -237,6 +238,29 @@ public class RabbitService {
             msg.setMensagem(ex.getMessage());
             msg.setErro(true);
             this.sendMessage("saga-auth-aprova-end", msg );
+        }
+
+    }
+
+
+     @RabbitListener(queues = "saga-auth-deletegerente-init")
+    public void receiveMessageSagaAprova(@Payload IdMensagemDTO message){
+        try {
+            Long id = message.getId();
+            Auth deletargerente = this.authService.buscaUser(id);
+            this.authService.deletaUserById(deletargerente.getId());
+            Message msg = new Message();
+            msg.setData(null);
+            msg.setMensagem("OK deletou gerente");
+            this.sendMessage("saga-auth-deletegerente-end", msg);
+
+        }catch (Exception ex){
+            System.out.println("deleta deu ruim");
+            Message msg = new Message();
+            msg.setData(null);
+            msg.setMensagem(ex.getMessage());
+            msg.setErro(true);
+            this.sendMessage("saga-auth-deletegerente-end", msg );
         }
 
     }

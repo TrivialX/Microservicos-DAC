@@ -11,10 +11,9 @@ import com.bantads.saga.DTO.IdMensagemDTO;
 
 import com.bantads.saga.service.DeleteGerenteService;
 
-
 @Component
 public class GerenteDeleteGerenteListener {
-    
+
     @Autowired
     private DeleteGerenteService aService;
 
@@ -22,13 +21,17 @@ public class GerenteDeleteGerenteListener {
     @RabbitListener(queues = "saga-gerente-deletegerente-end")
     public void receiveMessageSaga(@Payload IdMensagemDTO message) throws NoSuchAlgorithmException {
         try {
-            Long id = message.getId();
-            aService.setContaDGMessage(id);
-            System.out.println("cheguei aq");
+            if (message.isErro()) {
+                System.out.println(message.getMessage());
+            } else {
+                Long id = message.getId();
+                aService.setContaDGMessage(id);
+                System.out.println("cheguei aq");
+            }
         } catch (Exception e) {
             System.out.println("erro " + e);
         }
 
     }
-    
+
 }

@@ -3,7 +3,9 @@ package com.conta.services;
 
 import com.conta.DTOS.AutocadastroDTO;
 import com.conta.DTOS.ContaSagaDTO;
+import com.conta.DTOS.IdMensagemDTO;
 import com.conta.DTOS.Message;
+import com.conta.DTOS.MessageListDTO;
 import com.conta.models.CUD.ContaCUD;
 import com.conta.models.R.ContaR;
 import com.conta.models.R.MovimentacoesR;
@@ -18,6 +20,8 @@ import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RabbitService {
@@ -44,6 +48,15 @@ public class RabbitService {
 
 
     public void sendMessage(String queue, Message message) {
+        rabbitTemplate.convertAndSend(queue, message);
+    }
+
+    public void sendMessageID(String queue, IdMensagemDTO message) {
+        rabbitTemplate.convertAndSend(queue, message);
+    }
+
+
+     public void sendMessageList(String queue, MessageListDTO message) {
         rabbitTemplate.convertAndSend(queue, message);
     }
 
@@ -140,5 +153,29 @@ public class RabbitService {
         }
 
     }
+
+    @RabbitListener(queues = "saga-conta-deletegerente-init")
+    public void receiveMessageDeleteGerenteSaga(@Payload IdMensagemDTO message) throws NoSuchAlgorithmException {
+        try {
+            Long id_gerente = message.getId();
+            List <ContaR> contas = contaServiceR.buscaContasGerente(id_gerente);
+            List<ContaCUD> contasCUD = contas.stream().map(conta -> mapper.map(conta, ContaCUD.class)).collect(Collectors.toList());
+            Long gerMenosCont = this.contaServiceR.buscaGerentesContas();
+            contaService.atualizarIdsDoGerente(contasCUD, gerMenosCont);
+            MessageListDTO messlist = new MessageListDTO();
+            messlist.setData(contasCUD);
+            this.sendMessageID("saga-conta-autocadastro-end", message);
+            this.sendMessageList("atualiza-conta-saga", messlist);
+
+        }catch (Exception ex){
+            Message msg = new Message();
+            msg.setData(null);
+            msg.setMensagem(ex.getMessage());
+            msg.setErro(true);
+            this.sendMessage("saga-conta-autocadastro-end", msg );
+        }
+
+    }
+
 
 }

@@ -40,4 +40,9 @@ public class AuthService {
         return this.repo.findByUsuario(id);
 
     }
+
+    public void deletaUserById(String id){
+        this.repo.deleteById(id);
+
+    }
 }

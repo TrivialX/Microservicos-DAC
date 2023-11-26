@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -55,5 +56,13 @@ public class ContaService {
         }catch (Exception ex){
             System.out.println("ContaCUD deu pau");
         }
+    }
+
+    @Transactional
+    public void atualizarIdsDoGerente(List<ContaCUD> contas, Long novoIdGerente) {
+        for (ContaCUD conta : contas) {
+            conta.setGerenteId(novoIdGerente);
+        }
+        contaRepoCUD.saveAll(contas);
     }
 }

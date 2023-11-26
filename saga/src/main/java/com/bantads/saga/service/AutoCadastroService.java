@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bantads.saga.DTO.AutoCadastroDTO;
-import com.bantads.saga.DTO.ClienteDTO;
 import com.bantads.saga.DTO.MensagemDTO;
 import com.bantads.saga.sagas.autoCadastro.AuthAutoCadastroProducer;
 import com.bantads.saga.sagas.autoCadastro.ClienteAutoCadastroProducer;
