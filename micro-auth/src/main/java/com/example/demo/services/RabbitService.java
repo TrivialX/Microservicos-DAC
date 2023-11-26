@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 
+import com.example.demo.DTOS.AlteraClienteDTO;
 import com.example.demo.DTOS.AprovaClienteDTO;
 import com.example.demo.DTOS.AutocadastroDTO;
 import com.example.demo.DTOS.IdMensagemDTO;
@@ -156,6 +157,15 @@ public class RabbitService {
        emailService.enviarEmail(email, emailTitle, emailMessage);
    }
 
+    private void SendEmailAlteraConta(String email, String nome){
+        String emailTitle;
+        String emailMessage;
+        emailTitle = "Alteração de conta";
+        emailMessage = "Olá " + nome + ", sua conta foi alterada com successo";
+        emailService.enviarEmail(email, emailTitle, emailMessage);
+    }
+
+
 
     @RabbitListener(queues = "saga-auth-autocadastro-init")
     public void receiveMessageSaga(@Payload Message message){
@@ -239,8 +249,8 @@ public class RabbitService {
             msg.setErro(true);
             this.sendMessage("saga-auth-aprova-end", msg );
         }
-
     }
+
 
 
      @RabbitListener(queues = "saga-auth-deletegerente-init")
@@ -264,11 +274,35 @@ public class RabbitService {
         }
 
     }
+    
+    @RabbitListener(queues = "saga-auth-alteraperfil-init")
+    public void receiveMessageSagaAlteraPerfil(@Payload Message message){
+        try {
+
+            AlteraClienteDTO auth_base = mapper.map(message.getData(), AlteraClienteDTO.class);
+            Long user = auth_base.getId();
+            Auth auth_att = this.authService.buscaUser(user);
+            auth_att.setNome(auth_base.getNome());
+            auth_att.setEmail(auth_base.getEmail());
+
+            this.authService.save(auth_att);
+            System.out.println("Auth Altera perfil salvo");
+            SendEmailAlteraConta( auth_base.getEmail(), auth_base.getNome());
+
+            Message msg = new Message();
+            msg.setData(null);
+            msg.setMensagem("OK");
+            this.sendMessage("saga-auth-alteraperfil-end", msg);
 
 
-
-
-
-
+        }catch (Exception ex){
+            System.out.println("Altera perfil deu ruim");
+            Message msg = new Message();
+            msg.setData(null);
+            msg.setMensagem(ex.getMessage());
+            msg.setErro(true);
+            this.sendMessage("saga-auth-alteraperfil-end", msg );
+        }
+    }
 
 }

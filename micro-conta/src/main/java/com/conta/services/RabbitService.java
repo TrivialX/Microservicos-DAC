@@ -2,6 +2,7 @@ package com.conta.services;
 
 
 import com.conta.DTOS.AutocadastroDTO;
+import com.conta.DTOS.ClienteDTO;
 import com.conta.DTOS.ContaSagaDTO;
 import com.conta.DTOS.IdMensagemDTO;
 import com.conta.DTOS.Message;
@@ -81,7 +82,7 @@ public class RabbitService {
         ContaR conta = new ContaR();
 
         conta.setLimite(10.0);
-        conta.setGerenteId(1L);
+        conta.setGerente_id(1L);
         conta.setId_cliente(1L);
 
         this.contaServiceR.atualizarConta(conta);
@@ -178,4 +179,38 @@ public class RabbitService {
     }
 
 
+
+//    saga-conta-alteraperfil-init
+    @RabbitListener(queues = "saga-conta-alteraperfil-init")
+    public void receiveMessageSagaAlteraPerfil(@Payload Message message) throws NoSuchAlgorithmException {
+        try{
+            ClienteDTO clieteDTO = mapper.map(message.getData(), ClienteDTO.class);
+
+            ContaR contaR = this.contaServiceR.buscaContaPorIdCliente(clieteDTO.getId());
+
+            System.out.println("GERENTE CONTAR: " +contaR.getGerente_id());
+            ContaCUD contaCUD = mapper.map(contaR,ContaCUD.class);
+            System.out.println("GERENTE contaCUD: " +contaCUD.getGerente_id());
+
+            Double limite = clieteDTO.getLimite();
+
+            contaCUD.setLimite(limite);
+            contaCUD.setSaldo(clieteDTO.getSaldo());
+            contaR.setLimite(limite);
+            contaR.setSaldo(clieteDTO.getSaldo());
+
+            this.contaService.atualizaConta(contaCUD);
+            Message msg = new Message();
+
+            msg.setData(clieteDTO);
+            this.sendMessage("saga-conta-alteraperfil-end", msg);
+
+        }catch (Exception ex){
+            Message msg = new Message();
+            msg.setData(null);
+            msg.setMensagem(ex.getMessage());
+            msg.setErro(true);
+            this.sendMessage("saga-conta-alteraperfil-end", msg );
+        }
+    }
 }

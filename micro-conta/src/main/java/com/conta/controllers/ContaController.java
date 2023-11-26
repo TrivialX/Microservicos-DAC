@@ -199,20 +199,20 @@ public class ContaController {
     }
 
     @GetMapping("/conta/teste")
-    void teste(){
-//        List<Object[]> resultados = this.contaService.buscaGerentesContas();
-//        StringBuilder resposta = new StringBuilder();
-//        for (Object[] resultado : resultados) {
-//            Long gerenteId = (Long) resultado[0];
-//            Long count = (Long) resultado[1];
-//
-//            resposta.append("Gerente ID: ").append(gerenteId).append(", Contagem: ").append(count).append("\n");
-//        }
+    void teste(@RequestBody ClienteDTO cl){
+        ClienteDTO clieteDTO = mapper.map(cl, ClienteDTO.class);
+        ContaR contaR = this.contaService.buscaContaPorIdCliente(clieteDTO.getId());
+        System.out.println("ContaR id: " + contaR.getId_cliente()+ ", LIMIT: " + contaR.getLimite());
+        ContaCUD contaCUD = mapper.map(contaR,ContaCUD.class);
+
+        Double limite = clieteDTO.getLimite();
+        contaCUD.setLimite(limite);
+
+        this.contaServiceCud.atualizaConta(contaCUD);
+
+        System.out.println("ContaCUD id: " + contaCUD.getId_cliente() + ", LIMIT: " + contaCUD.getLimite());
 
         System.out.println("asdasda");
-
     }
-
-
 
 }

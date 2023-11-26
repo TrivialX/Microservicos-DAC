@@ -24,6 +24,10 @@ public class AuthAlteraPerfilListener {
     @RabbitListener(queues = "saga-auth-alteraperfil-end")
     public void receiveMessageSaga(@Payload MensagemDTO message) throws NoSuchAlgorithmException {
         try {
+            if(message.isErro())
+                System.out.println("Saga Altera perfil Deu Erro");
+            else
+                System.out.println("Saga Altera perfil  Finalizada");
             // AuthAutoCadastroDTO Authcadastro = mapper.map(message.getData(),
             // AuthAutoCadastroDTO.class);
             // email

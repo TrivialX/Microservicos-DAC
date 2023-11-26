@@ -45,4 +45,17 @@ public class AuthController {
         return "Email enviado com sucesso";
     }
 
+    @GetMapping("/teste")
+    void teste(){
+        Auth user = authService.buscaUser(4L);
+        user.setTipoUser("TESTE");
+        user.setUsuario(4L);
+        user.setSalt("asdasda");
+        user.setNome("teste");
+        user.setEmail("teste@test.com");
+        user.setSenha("asdasda1");
+
+        this.authService.save(user);
+;    }
+
 }

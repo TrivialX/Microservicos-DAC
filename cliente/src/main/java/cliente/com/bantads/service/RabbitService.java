@@ -101,4 +101,26 @@ public class RabbitService {
 
     }
 
+    @RabbitListener(queues = "saga-cliente-alteraperfil-init")
+    public void receiveMessageSagaAlteraPerfil(@Payload Message message){
+        try{
+            ClienteDTO clientedto = mapper.map(message.getData(), ClienteDTO.class);
+            Cliente cliente = mapper.map(clientedto, Cliente.class);
+            this.clienteServiceImp.salvarCliente(cliente);
+
+            Message msg = new Message();
+            msg.setData(clientedto);
+
+            this.sendMessage("saga-cliente-alteraperfil-end", msg);
+
+        }catch (Exception ex){
+            Message msg = new Message();
+            msg.setData(null);
+            msg.setMensagem(ex.getMessage());
+            msg.setErro(true);
+            this.sendMessage("saga-cliente-alteraperfil-end", msg );
+        }
+
+    }
+
 }

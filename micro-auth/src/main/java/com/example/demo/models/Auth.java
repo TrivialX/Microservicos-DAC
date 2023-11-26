@@ -22,7 +22,7 @@ public class Auth {
     private Long usuario;
 
 
-    public Auth(String nome, String email, String senha, String salt, String tipoUser, Long idUser ) {
+    public Auth(String id, String nome, String email, String senha, String salt, String tipoUser, Long idUser) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;

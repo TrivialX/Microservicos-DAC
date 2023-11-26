@@ -21,7 +21,7 @@ public class ContaR {
     private Long id_cliente;
 
     @Column(name = "gerente_id")
-    private Long gerenteId;
+    private Long gerente_id;
 
     @Column(name = "saldo")
     private Double saldo;

@@ -1,29 +1,63 @@
 package cliente.com.bantads.model;
 import java.io.Serializable;
 
-public class ClienteDTO implements Serializable{
+public class ClienteDTO {
 	private Long id;
 	private String nome;
 	private String email;
 	private String cpf;
-	private String endereco;
+	private String logradouro;
+	private String numero;
+	private String complemento;
+	private String tipo;
+	private String cidade;
+	private String estado;
+	private String cep;
 	private String telefone;
-	private Double salario;
+	private double salario;
+	private double limite;
 
-	
-	public ClienteDTO() {
-		
+
+
+	private double saldo;
+
+
+	public ClienteDTO(Long id, String nome, String email, String cpf, String telefone, double salario, double limite, String logradouro, String numero, String complemento, String tipo, String cidade, String estado,
+					  String cep, double saldo) {
+		this.id = id;
+		this.nome = nome;
+		this.email = email;
+		this.cpf = cpf;
+		this.logradouro = logradouro;
+		this.numero = numero;
+		this.complemento = complemento;
+		this.tipo = tipo;
+		this.cidade = cidade;
+		this.estado = estado;
+		this.cep = cep;
+		this.telefone = telefone;
+		this.salario = salario;
+		this.limite = limite;
+		this.saldo = saldo;
 	}
-	
-	public ClienteDTO(Long id, String nome, String email, String cpf, String endereco, String telefone, Double salario) {
-	    this.id = id;
-	    this.nome = nome;
-	    this.email = email;
-	    this.cpf = cpf;
-	    this.endereco = endereco;
-	    this.telefone = telefone;
-	    this.salario = salario;
 
+	public double getSaldo() {
+		return saldo;
+	}
+
+	public void setSaldo(double saldo) {
+		this.saldo = saldo;
+	}
+
+	public double getLimite() {
+		return limite;
+	}
+
+	public void setLimite(double limite) {
+		this.limite = limite;
+	}
+
+	public ClienteDTO() {
 	}
 
 	public Long getId() {
@@ -58,13 +92,62 @@ public class ClienteDTO implements Serializable{
 		this.cpf = cpf;
 	}
 
-	public String getEndereco() {
-		return endereco;
+	public String getLogradouro() {
+		return logradouro;
 	}
 
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
 	}
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public String getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
 
 	public String getTelefone() {
 		return telefone;
@@ -74,11 +157,11 @@ public class ClienteDTO implements Serializable{
 		this.telefone = telefone;
 	}
 
-	public Double getSalario() {
+	public double getSalario() {
 		return salario;
 	}
 
-	public void setSalario(Double salario) {
+	public void setSalario(double salario) {
 		this.salario = salario;
 	}
 

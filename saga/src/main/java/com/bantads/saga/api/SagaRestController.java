@@ -85,6 +85,7 @@ public class SagaRestController {
     @PutMapping("/clientes/{id}")
     public ResponseEntity<?> sagaAtualizarCliente(@PathVariable Long id, @RequestBody ClienteDTO clienteDTO) {
         try {
+            clienteDTO.setId(id);
             alteraPerService.initSagaAlteraPerfil(clienteDTO);
             return new ResponseEntity<>(HttpStatus.OK);
          } catch (Exception e) {

@@ -1,4 +1,4 @@
-package com.bantads.saga.DTO;
+package com.conta.DTOS;
 
 public class ClienteDTO {
     private Long id;
@@ -16,10 +16,10 @@ public class ClienteDTO {
     private double salario;
     private double limite;
     private double saldo;
-    
-    
+
+
     public ClienteDTO(Long id, String nome, String email, String cpf, String telefone, double salario, double limite, String logradouro, String numero, String complemento, String tipo, String cidade, String estado,
-            String cep, double saldo) {
+                      String cep, double saldo) {
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -36,7 +36,13 @@ public class ClienteDTO {
         this.limite = limite;
         this.saldo = saldo;
     }
+    public double getSaldo() {
+        return saldo;
+    }
 
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
+    }
     public double getLimite() {
         return limite;
     }
@@ -48,13 +54,6 @@ public class ClienteDTO {
     public ClienteDTO() {
     }
 
-    public double getSaldo() {
-        return saldo;
-    }
-
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
-    }
     public Long getId() {
         return id;
     }
@@ -142,8 +141,8 @@ public class ClienteDTO {
     public void setCep(String cep) {
         this.cep = cep;
     }
-    
-    
+
+
     public String getTelefone() {
         return telefone;
     }
