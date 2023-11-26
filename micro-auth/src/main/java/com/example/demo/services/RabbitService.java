@@ -151,7 +151,7 @@ public class RabbitService {
        String emailTitle;
        String emailMessage;
        emailTitle = "Bem-Vindo ao BanTads";
-       emailMessage = "Olá " + nome + ", Seja bme vindo ao nogocinho";
+       emailMessage = "Olá " + nome + ", Seja bem vindo ao negocinho";
        emailService.enviarEmail(email, emailTitle, emailMessage);
    }
 

@@ -118,9 +118,9 @@ public class RabbitService {
     public void receiveMessageSaga(@Payload Message message) throws NoSuchAlgorithmException {
         try {
             AutocadastroDTO autocadastro = mapper.map(message.getData(), AutocadastroDTO.class);
-            Long id_gerente = this.contaServiceR.buscaGerentesContas();
+//            Long id_gerente = this.contaServiceR.buscaGerentesContas();
             ContaCUD conta = mapper.map(autocadastro, ContaCUD.class);
-            conta.setGerenteId(id_gerente);
+//            conta.setGerenteId(id_gerente);
             this.contaService.criarConta(conta);
 
             Message msg = new Message();
