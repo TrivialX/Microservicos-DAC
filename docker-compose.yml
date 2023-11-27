@@ -121,6 +121,14 @@ services:
     ports:
       - "5015:8080"
 
+  getway:
+    container_name: getway
+    image: apigetway
+    networks:
+      - bantads
+    ports:
+      - "3000:3000"
+
 networks:
   bantads:
     driver: bridge

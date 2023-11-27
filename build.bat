@@ -22,6 +22,11 @@ cd saga
 call ./mvnw spring-boot:build-image -DskipTests
 cd..
 
+cd "Api Gateway"
+call docker build -t apigetway .
+cd..
+
+
 echo build and up containeers
 docker compose build --no-cache
 docker compose up -d
