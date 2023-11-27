@@ -201,9 +201,7 @@ public class RabbitService {
             Double limite = clieteDTO.getLimite();
 
             contaCUD.setLimite(limite);
-            contaCUD.setSaldo(clieteDTO.getSaldo());
             contaR.setLimite(limite);
-            contaR.setSaldo(clieteDTO.getSaldo());
 
             this.contaService.atualizaConta(contaCUD);
             Message msg = new Message();

@@ -66,6 +66,8 @@ const authServiceProxy = httpProxy("http://localhost:5000", {
 const proxyConta = httpProxy('http://localhost:5005', {});
 const proxyCliente = httpProxy('http://localhost:5009', {});
 
+const proxySaga = httpProxy('http://localhost:5015', {});
+
 
 // const usuariosServiceProxy = httpProxy("http://localhost:5000");
 // const boisServiceProxy = httpProxy("http://localhost:5001");
@@ -129,11 +131,20 @@ app.get("/clientes/:id", verifyJWT, (req, res, next) => {
     proxyCliente(req, res, next);
 });
 
+app.put("/saga/clientes/:id" , verifyJWT ,(req, res, next) =>{
+    req.url = `/clientes/${req.params.id}`;
+    proxySaga(req, res, next);
+});
+
+app.post("/saga/registrar", (req, res, next) =>{
+    req.url = `/registrar`;
+    proxySaga(req, res, next);
+});
 
 
 app.post("/logout", function(req, res){
     res.json({auth: false, token: null});
-})
+});
 
 
 // Confiurações do app

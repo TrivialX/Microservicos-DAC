@@ -15,6 +15,6 @@ public class AuthAlteraPerfilProducer {
 
     // Seq 5
     public void setAuthMessage(MensagemDTO dto) {
-        template.convertAndSend("test4", dto);
+        template.convertAndSend("saga-auth-alteraperfil-init", dto);
     }
 }
