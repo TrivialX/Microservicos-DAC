@@ -225,4 +225,19 @@ public class ContaController {
 
     }
 
+    @GetMapping("/conta/gerente/{id}")
+    ResponseEntity<List<ContaDTO>> contasGerente(@PathVariable Long id){
+        try{
+            List<ContaR> contas = this.contaService.buscaContasGerentePendente(id);
+
+            List<ContaDTO> contaDTO = contas.stream().map(conta -> mapper.map(conta, ContaDTO.class)).collect(Collectors.toList());
+
+            return ResponseEntity.status(200).body(contaDTO);
+
+
+        }catch (Exception ex){
+            return ResponseEntity.status(404).build();
+        }
+    }
+
 }

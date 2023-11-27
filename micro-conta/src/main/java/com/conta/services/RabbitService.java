@@ -1,12 +1,7 @@
 package com.conta.services;
 
 
-import com.conta.DTOS.AutocadastroDTO;
-import com.conta.DTOS.ClienteDTO;
-import com.conta.DTOS.ContaSagaDTO;
-import com.conta.DTOS.IdMensagemDTO;
-import com.conta.DTOS.Message;
-import com.conta.DTOS.MessageListDTO;
+import com.conta.DTOS.*;
 import com.conta.models.CUD.ContaCUD;
 import com.conta.models.R.ContaR;
 import com.conta.models.R.MovimentacoesR;
@@ -131,10 +126,11 @@ public class RabbitService {
     @RabbitListener(queues = "saga-conta-autocadastro-init")
     public void receiveMessageSaga(@Payload Message message) throws NoSuchAlgorithmException {
         try {
+
             AutocadastroDTO autocadastro = mapper.map(message.getData(), AutocadastroDTO.class);
-//            Long id_gerente = this.contaServiceR.buscaGerentesContas();
+            Long id_gerente = this.contaServiceR.buscaGerentesContas();
             ContaCUD conta = mapper.map(autocadastro, ContaCUD.class);
-//            conta.setGerenteId(id_gerente);
+            conta.setGerenteId(id_gerente);
             this.contaService.criarConta(conta);
 
             Message msg = new Message();
@@ -217,4 +213,55 @@ public class RabbitService {
             this.sendMessage("saga-conta-alteraperfil-end", msg );
         }
     }
+
+
+
+    @RabbitListener(queues = "saga-conta-aprova-init")
+    public void receiveMessageSagaAprovaConta(@Payload Message message) throws NoSuchAlgorithmException {
+
+        try{
+            // ContaDTO
+            ContaDTO contaDTO = mapper.map(message.getData(), ContaDTO.class);
+            ContaCUD contaCUD = mapper.map(message.getData(), ContaCUD.class);
+            this.contaService.atualizaConta(contaCUD);
+
+            Message msg = new Message();
+            msg.setData(contaDTO);
+            this.sendMessage("saga-conta-aprova-end", msg);
+
+        }catch (Exception ex){
+            Message msg = new Message();
+            msg.setData(null);
+            msg.setMensagem(ex.getMessage());
+            msg.setErro(true);
+            this.sendMessage("saga-conta-aprova-end", msg );
+        }
+
+    }
+
+
+    @RabbitListener(queues = "saga-conta-reprova-init")
+    public void receiveMessageSagaReprovaConta(@Payload Message message) throws NoSuchAlgorithmException {
+        try{
+            // ContaDTO
+            ContaDTO contaDTO = mapper.map(message.getData(), ContaDTO.class);
+            ContaCUD contaCUD = mapper.map(message.getData(), ContaCUD.class);
+            contaCUD.setSituacao("INATIVA");
+            contaCUD.setGerenteId(null);
+            this.contaService.atualizaConta(contaCUD);
+
+            Message msg = new Message();
+            msg.setData(contaDTO);
+            this.sendMessage("saga-conta-reprova-end", msg);
+        }catch (Exception ex){
+            Message msg = new Message();
+            msg.setData(null);
+            msg.setMensagem(ex.getMessage());
+            msg.setErro(true);
+            this.sendMessage("saga-conta-reprova-end", msg );
+        }
+
+    }
+
+
 }

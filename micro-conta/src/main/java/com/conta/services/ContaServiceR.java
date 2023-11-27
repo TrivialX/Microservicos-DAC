@@ -55,6 +55,19 @@ public class ContaServiceR {
         return null;
     }
 
+
+    @Transactional("rTransactionManager")
+    public List<ContaR> buscaContasGerentePendente(Long id){
+        try{
+            return this.contaRepoR.findByGerenteIdAndSituacao(id, "PENDENTE");
+        }catch (Exception ex){
+            System.out.println("Conta deu pau R");
+        }
+
+        return null;
+    }
+
+
     @Transactional("rTransactionManager")
     public List<ContaR> buscaContasGerente(Long id){
         try{

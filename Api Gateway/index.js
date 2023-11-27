@@ -124,6 +124,13 @@ app.get("/conta/:id", verifyJWT,  (req, res, next) => {
     proxyConta(req, res, next);
 });
 
+//pendestens
+app.get("/conta/gerente/:id", verifyJWT,  (req, res, next) => {
+    req.url = `/conta/gerente/${req.params.id}`;
+    proxyConta(req, res, next);
+});
+
+
 
 //cliente por id
 app.get("/clientes/:id", verifyJWT, (req, res, next) => {
@@ -140,6 +147,21 @@ app.post("/saga/registrar", (req, res, next) =>{
     req.url = `/registrar`;
     proxySaga(req, res, next);
 });
+
+
+app.put("/saga/clientes/aprovacao/:id" , verifyJWT ,(req, res, next) =>{
+    req.url = `/clientes/aprovacao/${req.params.id}`;
+    console.log(req.body);
+    proxySaga(req, res, next);
+});
+
+app.put("/saga/clientes/reprovacao/:id" , verifyJWT ,(req, res, next) =>{
+    req.url = `/clientes/reprovacao/${req.params.id}`;
+    console.log(req.body);
+    proxySaga(req, res, next);
+});
+
+
 
 
 app.post("/logout", function(req, res){

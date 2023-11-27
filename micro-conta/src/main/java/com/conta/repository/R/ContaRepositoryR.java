@@ -14,4 +14,7 @@ public interface ContaRepositoryR extends JpaRepository<ContaR, Long> {
 
     List<ContaR> findByGerenteId(Long gerente_id);
 
+    List<ContaR> findByGerenteIdAndSituacao(Long gerente_id, String situacao);
+
+
 }

@@ -1,5 +1,6 @@
 package com.bantads.saga.sagas.aprovaCliente;
 
+import com.bantads.saga.DTO.MensagemDTO;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,7 +13,7 @@ public class AuthAprovaProducer {
     private RabbitTemplate template;
 
     // Seq 3
-    public void setAuthMessage(SituacaoClienteDTO dto) {
+    public void setAuthMessage(MensagemDTO dto) {
         template.convertAndSend(ConfigAprovaCliente.queueAprovaContaAuthProducer().getName(), dto);
     }
 }

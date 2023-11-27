@@ -24,9 +24,13 @@ public class ContaAprovaListener {
     public void receiveMessageSaga(@Payload MensagemDTO message) throws NoSuchAlgorithmException {
          try {
             ContaDTO conta = mapper.map(message.getData(), ContaDTO.class);
-            SituacaoClienteDTO msg = new SituacaoClienteDTO();
-            msg.setId_cliente(conta.getId_cliente());
-            msg.setSituacao("APROVADO");
+            MensagemDTO msg = new MensagemDTO();
+            SituacaoClienteDTO situ = new SituacaoClienteDTO();
+
+            situ.setId_cliente(conta.getId_cliente());
+            situ.setSituacao("APROVADO");
+            msg.setData(situ);
+
             prod.setAuthMessage(msg);
         } catch (Exception e) {
             System.out.println("erro " + e);

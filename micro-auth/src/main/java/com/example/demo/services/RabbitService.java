@@ -165,6 +165,15 @@ public class RabbitService {
         emailService.enviarEmail(email, emailTitle, emailMessage);
     }
 
+    private void SendEmailReprovado(String email, String nome, String observacao){
+        String emailTitle;
+        String emailMessage;
+        emailTitle = "Conta recusada";
+        emailMessage = "Olá " + nome + ", sua conta foi recusa, motivo:" + observacao;
+        emailService.enviarEmail(email, emailTitle, emailMessage);
+    }
+
+
 
 
     @RabbitListener(queues = "saga-auth-autocadastro-init")
@@ -214,6 +223,8 @@ public class RabbitService {
     public void receiveMessageSagaAprova(@Payload Message message){
         try {
             AprovaClienteDTO base = mapper.map(message.getData(), AprovaClienteDTO.class);
+
+            System.out.println(base.getId_cliente()  + ", situ: " + base.getSituacao());
             Long id = base.getId_cliente();
 
             Auth auth = this.authService.buscaUser(id);
@@ -251,6 +262,43 @@ public class RabbitService {
         }
     }
 
+
+    @RabbitListener(queues = "saga-auth-reprova-init")
+    public void receiveMessageSagaReprova(@Payload Message message){
+        try {
+            AprovaClienteDTO base = mapper.map(message.getData(), AprovaClienteDTO.class);
+
+            System.out.println(base.getId_cliente()  + ", situ: " + base.getSituacao());
+            Long id = base.getId_cliente();
+
+            Auth auth = this.authService.buscaUser(id);
+
+            if(auth == null) {
+                Message msg = new Message();
+                msg.setMensagem("SEM CLIENTE PARA ESSE ID: " + id);
+                msg.setErro(true);
+                this.sendMessage("saga-auth-reprova-end", msg);
+                return;
+            }
+
+            this.authService.deletaUserById(auth.getId());
+
+            this.SendEmailReprovado(auth.getEmail(), auth.getNome(), base.getObservacao());
+
+            Message msg = new Message();
+            msg.setData(null);
+            msg.setMensagem("OK");
+            this.sendMessage("saga-auth-aprova-end", msg);
+
+        }catch (Exception ex){
+            System.out.println("reprova deu ruim");
+            Message msg = new Message();
+            msg.setData(null);
+            msg.setMensagem(ex.getMessage());
+            msg.setErro(true);
+            this.sendMessage("saga-auth-reprova-end", msg );
+        }
+    }
 
 
      @RabbitListener(queues = "saga-auth-deletegerente-init")
