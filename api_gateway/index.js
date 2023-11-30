@@ -25,7 +25,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(cors())
 
-const authServiceProxy = httpProxy("http://localhost:5000", {
+const authServiceProxy = httpProxy("http://micro-auth:8080", {
     proxyReqBodyDecorator: function(bodyContent, srcReq){
         console.log(bodyContent.user);
         console.log(bodyContent.password);
@@ -63,10 +63,10 @@ const authServiceProxy = httpProxy("http://localhost:5000", {
 });
 
 
-const proxyConta = httpProxy('http://localhost:5005', {});
-const proxyCliente = httpProxy('http://localhost:5009', {});
+const proxyConta = httpProxy('http://micro-conta:8080', {});
+const proxyCliente = httpProxy('http://micro-cliente:8080', {});
 
-const proxySaga = httpProxy('http://localhost:5015', {});
+const proxySaga = httpProxy('http://saga:8080', {});
 
 
 // const usuariosServiceProxy = httpProxy("http://localhost:5000");

@@ -17,3 +17,6 @@ VALUES
   ('Ana Souza', 'ana@example.com', '456.123.789-00', 'Praça Central, 123', '(11) 7654-3210', '4800.00');
 
 
+-- Password: pastel123 maria,
+-- Password: rato123 ana,
+-- Password: banana123 carlos, 

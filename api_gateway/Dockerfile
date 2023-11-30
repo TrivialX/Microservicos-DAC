@@ -1,7 +1,7 @@
 FROM node:18.17.1
-WORKDIR /the/workdir/path
+WORKDIR /usr/src/app
 COPY ["package.json", "package-lock.json*", "./"]
 RUN npm install
-EXPOSE 3000
 COPY . .
+EXPOSE 3000
 CMD ["node", "index.js"]
